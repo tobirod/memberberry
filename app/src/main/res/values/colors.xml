@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    // Grayscale
+    <color name="white">#FFFFFF</color>
+    <color name="silver">#D9D9D9</color>
+    <color name="lightGray">#C4C4C4</color>
+    <color name="gray">#999999</color>
+    <color name="darkGray">#707070</color>
+    <color name="charcoal">#363636</color>
+    <color name="black">#000000</color>
+
+    // Pastels
+    <color name="pastelCream">#FAF9D8</color>
+    <color name="pastelOrange">#FFB048</color>
+    <color name="pastelStrawberry">#E8425F</color>
+    <color name="pastelPurple">#8755FF</color>
+    <color name="pastelDarkPurple">#4A2F8B</color>
+    <color name="pastelBlackPurple">#4C066D</color>
+    <color name="pastelTurquoise">#6BD3E8</color>
+    <color name="pastelMint">#A7FFA5</color>
+
+    // Fruits
+    <color name="banana">#FFFB85</color>
+    <color name="clementine">#FFD464</color>
+    <color name="strawberry">#FA5B75</color>
+    <color name="plum">#5A3662</color>
+    <color name="grape">#432C51</color>
+
+</resources>
