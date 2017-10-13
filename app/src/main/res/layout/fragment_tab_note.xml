@@ -20,6 +20,7 @@
         android:layout_width="@dimen/box_button_width"
         android:layout_height="@dimen/box_button_height"
         android:text="Add New Note"
+        android:fontFamily="casual"
         android:textColor="@color/pastelCream"
         android:background="@layout/custom_button"
         app:layout_constraintBottom_toBottomOf="parent"

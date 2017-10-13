@@ -21,6 +21,7 @@
         android:layout_height="@dimen/box_button_height"
         android:background="@layout/custom_button"
         android:text="Add New Task"
+        android:fontFamily="casual"
         android:textColor="@color/pastelCream"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

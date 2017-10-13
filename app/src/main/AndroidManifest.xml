@@ -5,9 +5,9 @@
     <application
         android:allowBackup="true"
         android:name=".Realm.MemberBerryRealmApplication"
-        android:icon="@mipmap/ic_launcher_member_round"
+        android:icon="@mipmap/ic_launcher_member"
         android:label="MemberBerry"
-        android:roundIcon="@mipmap/ic_launcher_member_round"
+        android:roundIcon="@mipmap/ic_launcher_member"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
