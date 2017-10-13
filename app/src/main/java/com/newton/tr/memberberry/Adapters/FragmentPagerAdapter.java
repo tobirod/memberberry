@@ -1,18 +1,18 @@
-package com.example.tobias.memberberry;
+package com.newton.tr.memberberry.Adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.tobias.memberberry.TabNote;
-import com.example.tobias.memberberry.TabShop;
-import com.example.tobias.memberberry.TabTask;
+import com.newton.tr.memberberry.Fragments.TabNote;
+import com.newton.tr.memberberry.Fragments.TabShop;
+import com.newton.tr.memberberry.Fragments.TabTask;
 
-public class PagerAdapter extends FragmentStatePagerAdapter {
+public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     int mTabsCount;
 
-    public PagerAdapter(FragmentManager fm, int NumberOfTabs) {
+    public FragmentPagerAdapter(FragmentManager fm, int NumberOfTabs) {
         super(fm);
         this.mTabsCount = NumberOfTabs;
     }

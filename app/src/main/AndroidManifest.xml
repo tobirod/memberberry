@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.tobias.memberberry">
+    package="com.newton.tr.memberberry">
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher_member"
+        android:name=".Realm.MemberBerryRealmApplication"
+        android:icon="@mipmap/ic_launcher_member_round"
         android:label="MemberBerry"
         android:roundIcon="@mipmap/ic_launcher_member_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:label=""
+            android:name="com.newton.tr.memberberry.Activities.MainActivity"
+            android:label="... member?"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

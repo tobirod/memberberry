@@ -1,12 +1,28 @@
-package com.example.tobias.memberberry;
+package com.newton.tr.memberberry.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.TimeUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.newton.tr.memberberry.Models.Task;
+import com.newton.tr.memberberry.R;
+
+import java.lang.reflect.Array;
+import java.util.Date;
+import java.util.Calendar;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 
 /**
@@ -18,6 +34,12 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class TabTask extends Fragment {
+
+    Boolean check = false;
+
+    Realm taskRealm;
+    private Date currentDate;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -58,13 +80,70 @@ public class TabTask extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+        taskRealm = Realm.getDefaultInstance();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tab_task, container, false);
+        View view = inflater.inflate(R.layout.fragment_tab_task, container, false);
+
+        Button button = (Button) view.findViewById(R.id.btnAdd_Task);
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                if (check) {
+
+
+                    Task tasken = new Task();
+
+                    tasken = taskRealm.where(Task.class).findFirst();
+
+                    String task = tasken.getTask();
+
+                    Toast.makeText(getContext(), task, Toast.LENGTH_LONG).show();
+                } else {
+
+                    long realmId = taskRealm.where(Task.class).count();
+
+                    String taskId1 = String.valueOf(realmId);
+
+                    check = true;
+
+                    currentDate = Calendar.getInstance().getTime();
+
+
+
+                    taskRealm.beginTransaction();
+
+
+                    taskRealm.deleteAll();
+
+                    Task task = new Task();
+                    task.setId(taskId1);
+                    task.setTag("Task");
+                    task.setDateAdded(currentDate);
+                    task.setTask("Gå hem");
+
+                    taskRealm.copyToRealm(task);
+
+                    taskRealm.commitTransaction();
+
+                }
+
+            }
+        });
+
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

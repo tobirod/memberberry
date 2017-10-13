@@ -1,4 +1,4 @@
-package com.example.tobias.memberberry;
+package com.newton.tr.memberberry;
 
 import org.junit.Test;
 

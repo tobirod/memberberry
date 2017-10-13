@@ -1,4 +1,4 @@
-package com.example.tobias.memberberry;
+package com.newton.tr.memberberry.Activities;
 
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
@@ -12,7 +12,24 @@ import android.view.MenuItem;
 
 import android.widget.TextView;
 
+import com.newton.tr.memberberry.Adapters.FragmentPagerAdapter;
+import com.newton.tr.memberberry.Fragments.TabNote;
+import com.newton.tr.memberberry.Fragments.TabShop;
+import com.newton.tr.memberberry.Fragments.TabTask;
+import com.newton.tr.memberberry.Models.Task;
+import com.newton.tr.memberberry.R;
+
+import java.util.Date;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
+
 public class MainActivity extends AppCompatActivity implements TabTask.OnFragmentInteractionListener, TabShop.OnFragmentInteractionListener, TabNote.OnFragmentInteractionListener {
+
+    private Realm realm;
+    private Realm taskRealm;
+    private Date currentDate;
+    private RealmResults<Task> allTasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements TabTask.OnFragmen
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        realm = Realm.getDefaultInstance();
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabLayout);
 
@@ -30,9 +50,9 @@ public class MainActivity extends AppCompatActivity implements TabTask.OnFragmen
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager)findViewById(R.id.viewPager);
-        final PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        final FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
 
-        viewPager.setAdapter(pagerAdapter);
+        viewPager.setAdapter(fragmentPagerAdapter);
         viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
