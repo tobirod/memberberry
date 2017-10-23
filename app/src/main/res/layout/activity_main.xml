@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/toolbar"
-        android:background="@color/plum"
+        android:background="@color/grape"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -28,10 +28,11 @@
             android:id="@+id/toolBarText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="casual"
+            android:fontFamily="@font/snaphand"
             android:text="... member?"
             android:textColor="@color/pastelCream"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
     </android.support.v7.widget.Toolbar>
 
@@ -40,7 +41,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/plum"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:tabTextAppearance="@style/tabTextCustomStyle"/>
     
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"

@@ -96,44 +96,48 @@ public class TabTask extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (check) {
-
-
-                    Task tasken = new Task();
-
-                    tasken = taskRealm.where(Task.class).findFirst();
-
-                    String task = tasken.getTask();
-
-                    Toast.makeText(getContext(), task, Toast.LENGTH_LONG).show();
-                } else {
-
-                    long realmId = taskRealm.where(Task.class).count();
-
-                    String taskId1 = String.valueOf(realmId);
-
-                    check = true;
-
-                    currentDate = Calendar.getInstance().getTime();
+                Toast.makeText(getContext(), "hej", Toast.LENGTH_SHORT).show();
 
 
 
-                    taskRealm.beginTransaction();
-
-
-                    taskRealm.deleteAll();
-
-                    Task task = new Task();
-                    task.setId(taskId1);
-                    task.setTag("Task");
-                    task.setDateAdded(currentDate);
-                    task.setTask("Gå hem");
-
-                    taskRealm.copyToRealm(task);
-
-                    taskRealm.commitTransaction();
-
-                }
+//                if (check) {
+//
+//
+//                    Task tasken = new Task();
+//
+//                    tasken = taskRealm.where(Task.class).findFirst();
+//
+//                    String task = tasken.getTask();
+//
+//                    Toast.makeText(getContext(), task, Toast.LENGTH_LONG).show();
+//                } else {
+//
+//                    long realmId = taskRealm.where(Task.class).count();
+//
+//                    String taskId1 = String.valueOf(realmId);
+//
+//                    check = true;
+//
+//                    currentDate = Calendar.getInstance().getTime();
+//
+//
+//
+//                    taskRealm.beginTransaction();
+//
+//
+//                    taskRealm.deleteAll();
+//
+//                    Task task = new Task();
+//                    task.setId(taskId1);
+//                    task.setTag("Task");
+//                    task.setDateAdded(currentDate);
+//                    task.setTask("Gå hem");
+//
+//                    taskRealm.copyToRealm(task);
+//
+//                    taskRealm.commitTransaction();
+//
+//                }
 
             }
         });
