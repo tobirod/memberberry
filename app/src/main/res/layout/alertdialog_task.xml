@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pastelCream">
+
+    <TextView
+        android:id="@+id/taskTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/plum"
+        android:fontFamily="@font/snaphand"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="NEW TASK"
+        android:textColor="@color/pastelCream"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/taskEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:fontFamily="@font/snaphand"
+        android:hint="Task"
+        android:textSize="20sp"
+        android:inputType="text"
+        android:textColor="@color/plum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskTitle" />
+
+    <TextView
+        android:id="@+id/taskPrioHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/snaphand"
+        android:text="Priority:"
+        android:textColor="@color/plum"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/taskEditText" />
+
+    <RadioGroup
+        android:id="@+id/taskPrioRadioGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/taskPrioHeader">
+
+        <RadioButton
+            android:id="@+id/taskRadioHighBtn"
+            style="@style/customRadioButton"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:text="High" />
+
+        <RadioButton
+            android:id="@+id/taskRadioMediumBtn"
+            style="@style/customRadioButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Medium" />
+
+        <RadioButton
+            android:id="@+id/taskRadioLowBtn"
+            style="@style/customRadioButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Low" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/taskAlertDialogCancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@layout/custom_button"
+        android:fontFamily="@font/snaphand"
+        android:text="Cancel"
+        android:textColor="@color/pastelCream"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/taskAlertDialogDone"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskPrioRadioGroup" />
+
+    <Button
+        android:id="@+id/taskAlertDialogDone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@layout/custom_button"
+        android:fontFamily="@font/snaphand"
+        android:text="Done"
+        android:textColor="@color/pastelCream"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/taskAlertDialogCancel"
+        app:layout_constraintTop_toBottomOf="@+id/taskPrioRadioGroup" />
+
+</android.support.constraint.ConstraintLayout>

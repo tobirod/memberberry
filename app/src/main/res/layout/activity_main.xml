@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/toolbar"
-        android:background="@color/grape"
+        android:background="@color/plum"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -31,8 +31,7 @@
             android:fontFamily="@font/snaphand"
             android:text="... member?"
             android:textColor="@color/pastelCream"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+            android:textSize="30sp" />
 
     </android.support.v7.widget.Toolbar>
 

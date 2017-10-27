@@ -21,6 +21,7 @@
         android:layout_height="@dimen/box_button_height"
         android:text="Add New Note"
         android:fontFamily="@font/snaphand"
+        android:textSize="30sp"
         android:textColor="@color/pastelCream"
         android:background="@layout/custom_button"
         app:layout_constraintBottom_toBottomOf="parent"

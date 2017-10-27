@@ -36,20 +36,20 @@ public class MainActivity extends AppCompatActivity implements TabTask.OnFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         realm = Realm.getDefaultInstance();
 
-        TabLayout tabLayout = (TabLayout)findViewById(R.id.tabLayout);
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
 
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_task).setText("TASKS"));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_shop).setText("SHOPPING LIST"));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_note).setText("NOTES"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final ViewPager viewPager = (ViewPager)findViewById(R.id.viewPager);
+        final ViewPager viewPager = findViewById(R.id.viewPager);
         final FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
 
         viewPager.setAdapter(fragmentPagerAdapter);
@@ -78,8 +78,8 @@ public class MainActivity extends AppCompatActivity implements TabTask.OnFragmen
     public void onWindowFocusChanged(boolean hasFocus){
 
         // set toolbar logo to center programmatically
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView toolbarText = (TextView) findViewById(R.id.toolBarText);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView toolbarText = findViewById(R.id.toolBarText);
         int offset = (toolbar.getWidth() / 2) - (toolbarText.getWidth() / 2);
         // set
         toolbarText.setX(offset);

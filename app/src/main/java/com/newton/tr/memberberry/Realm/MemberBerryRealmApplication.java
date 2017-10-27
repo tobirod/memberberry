@@ -16,6 +16,7 @@ public class MemberBerryRealmApplication extends Application {
         RealmConfiguration realmConfig = new RealmConfiguration.Builder()
                 .name("memberberry.realm")
                 .schemaVersion(0)
+                .deleteRealmIfMigrationNeeded()
                 .build();
 
         Realm.setDefaultConfiguration(realmConfig);

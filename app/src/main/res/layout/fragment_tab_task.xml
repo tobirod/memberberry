@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     tools:context="com.newton.tr.memberberry.Fragments.TabTask">
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/listView_Task"
+        android:id="@+id/recyclerView_Task"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -19,10 +19,11 @@
         android:id="@+id/btnAdd_Task"
         android:layout_width="@dimen/box_button_width"
         android:layout_height="@dimen/box_button_height"
-        android:background="@layout/custom_button"
         android:text="Add New Task"
         android:fontFamily="@font/snaphand"
+        android:textSize="30sp"
         android:textColor="@color/pastelCream"
+        android:background="@layout/custom_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

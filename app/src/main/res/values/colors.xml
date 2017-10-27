@@ -14,8 +14,8 @@
     <color name="black">#000000</color>
 
     // Pastels
-    <color name="pastelCream">#FFFEEB</color>
-    <color name="pastelOrange">#FFB048</color>
+    <color name="pastelCream">#F1F0EA</color>
+    <color name="pastelOrange">#DA7C00</color>
     <color name="pastelStrawberry">#E8425F</color>
     <color name="pastelPurple">#8755FF</color>
     <color name="pastelDarkPurple">#4A2F8B</color>

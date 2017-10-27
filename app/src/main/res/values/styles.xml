@@ -19,7 +19,7 @@
 
     <style name="Base.Widget.Design.TabLayout" parent="android:Widget">
         <item name="tabBackground">@drawable/tab_background</item>
-        <item name="tabIndicatorColor">@color/pastelTurquoise</item>
+        <item name="tabIndicatorColor">@color/pastelOrange</item>
         <item name="tabIndicatorHeight">3dp</item>
         <item name="tabTextAppearance">@style/tabTextCustomStyle</item>
     </style>
@@ -27,6 +27,13 @@
     <style name="tabTextCustomStyle" parent="TextAppearance.Design.Tab">
         <item name="android:fontFamily">@font/snaphand</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="customRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/plum</item>
+        <item name="buttonTint">@color/plum</item>
+        <item name="android:fontFamily">@font/snaphand</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
 </resources>

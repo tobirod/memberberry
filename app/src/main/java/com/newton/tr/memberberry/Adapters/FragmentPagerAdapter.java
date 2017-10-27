@@ -10,7 +10,7 @@ import com.newton.tr.memberberry.Fragments.TabTask;
 
 public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
 
-    int mTabsCount;
+    private int mTabsCount;
 
     public FragmentPagerAdapter(FragmentManager fm, int NumberOfTabs) {
         super(fm);

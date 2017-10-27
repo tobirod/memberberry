@@ -1,28 +1,29 @@
 package com.newton.tr.memberberry.Fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.TimeUtils;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.newton.tr.memberberry.Adapters.TaskRecyclerViewAdapter;
 import com.newton.tr.memberberry.Models.Task;
 import com.newton.tr.memberberry.R;
 
-import java.lang.reflect.Array;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.UUID;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 
 /**
@@ -35,10 +36,11 @@ import io.realm.RealmResults;
  */
 public class TabTask extends Fragment {
 
-    Boolean check = false;
-
     Realm taskRealm;
-    private Date currentDate;
+    private RecyclerView recyclerView;
+    private TaskRecyclerViewAdapter adapter;
+
+    int taskPrioBuffer;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,64 +83,100 @@ public class TabTask extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
         taskRealm = Realm.getDefaultInstance();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tab_task, container, false);
 
-        Button button = (Button) view.findViewById(R.id.btnAdd_Task);
-        button.setOnClickListener(new View.OnClickListener() {
+        recyclerView = view.findViewById(R.id.recyclerView_Task);
+        Button newTaskButton = view.findViewById(R.id.btnAdd_Task);
+
+        newTaskButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getContext(), "hej", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+                final View taskView = getLayoutInflater().inflate(R.layout.alertdialog_task, null);
+
+                final EditText taskString = taskView.findViewById(R.id.taskEditText);
+                final RadioGroup taskPrioRadioGroup = taskView.findViewById(R.id.taskPrioRadioGroup);
+                final Button cancelButton = taskView.findViewById(R.id.taskAlertDialogCancel);
+                final Button doneButton = taskView.findViewById(R.id.taskAlertDialogDone);
 
 
+                setUpRecyclerView();
 
-//                if (check) {
-//
-//
-//                    Task tasken = new Task();
-//
-//                    tasken = taskRealm.where(Task.class).findFirst();
-//
-//                    String task = tasken.getTask();
-//
-//                    Toast.makeText(getContext(), task, Toast.LENGTH_LONG).show();
-//                } else {
-//
-//                    long realmId = taskRealm.where(Task.class).count();
-//
-//                    String taskId1 = String.valueOf(realmId);
-//
-//                    check = true;
-//
-//                    currentDate = Calendar.getInstance().getTime();
-//
-//
-//
-//                    taskRealm.beginTransaction();
-//
-//
-//                    taskRealm.deleteAll();
-//
-//                    Task task = new Task();
-//                    task.setId(taskId1);
-//                    task.setTag("Task");
-//                    task.setDateAdded(currentDate);
-//                    task.setTask("Gå hem");
-//
-//                    taskRealm.copyToRealm(task);
-//
-//                    taskRealm.commitTransaction();
-//
-//                }
+                dialogBuilder.setView(taskView);
+                final AlertDialog taskDialog = dialogBuilder.create();
+                taskDialog.show();
 
+                taskPrioRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        int id = taskPrioRadioGroup.getCheckedRadioButtonId();
+
+                        switch (id) {
+                            case R.id.taskRadioHighBtn:
+                                taskPrioBuffer = 0;
+                                break;
+
+                            case R.id.taskRadioMediumBtn:
+                                taskPrioBuffer = 1;
+                                break;
+
+                            case R.id.taskRadioLowBtn:
+                                taskPrioBuffer = 2;
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                });
+
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        taskDialog.cancel();
+                    }
+                });
+
+                doneButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        long taskId = taskRealm.where(Task.class).count();
+                        String taskUUID = UUID.randomUUID().toString();
+                        int taskPrio = taskPrioBuffer;
+                        Date taskDateAdded = Calendar.getInstance().getTime();
+                        String taskContent = taskString.getText().toString();
+
+                        taskRealm.beginTransaction();
+
+                        Task newTask = new Task();
+
+                        newTask.setId(taskId);
+                        newTask.setUUID(taskUUID);
+                        newTask.setStatus(false);
+                        newTask.setPrioLevel(taskPrio);
+                        newTask.setDateAdded(taskDateAdded);
+                        newTask.setTask(taskContent);
+
+                        taskRealm.copyToRealm(newTask);
+
+                        taskRealm.commitTransaction();
+
+                        Toast.makeText(getContext(), "Task added successfully.", Toast.LENGTH_SHORT).show();
+
+                        taskDialog.dismiss();
+
+                    }
+                });
             }
         });
 
@@ -155,6 +193,20 @@ public class TabTask extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        setUpRecyclerView();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        taskRealm.close();
     }
 
     @Override
@@ -187,5 +239,12 @@ public class TabTask extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void setUpRecyclerView() {
+        adapter = new TaskRecyclerViewAdapter(taskRealm.where(Task.class).findAll());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
     }
 }
