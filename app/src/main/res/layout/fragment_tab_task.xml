@@ -6,26 +6,46 @@
     tools:context="com.newton.tr.memberberry.Fragments.TabTask">
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_Task"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/recyclerView_Task"
-        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/pastelCream"
+        app:layout_constraintBottom_toTopOf="@+id/btnAdd_Task"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/btnAdd_Task"
-        android:background="@color/pastelCream" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnAdd_Task"
         android:layout_width="@dimen/box_button_width"
         android:layout_height="@dimen/box_button_height"
-        android:text="Add New Task"
-        android:fontFamily="@font/snaphand"
-        android:textSize="30sp"
-        android:textColor="@color/pastelCream"
         android:background="@layout/custom_button"
+        android:fontFamily="@font/snaphand"
+        android:padding="5dp"
+        android:text="Add New Task"
+        android:textColor="@color/pastelCream"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/btnRemove_Tagged"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnRemove_Tagged"
+        android:layout_width="@dimen/box_button_width"
+        android:layout_height="@dimen/box_button_height"
+        android:background="@layout/custom_button"
+        android:fontFamily="@font/snaphand"
+        android:padding="5dp"
+        android:text="Remove Tagged Tasks"
+        android:visibility="visible"
+        android:textColor="@color/pastelCream"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnAdd_Task" />
 
 </android.support.constraint.ConstraintLayout>

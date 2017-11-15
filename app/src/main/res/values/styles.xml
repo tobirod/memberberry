@@ -32,8 +32,8 @@
     <style name="customRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:textColor">@color/plum</item>
         <item name="buttonTint">@color/plum</item>
-        <item name="android:fontFamily">@font/snaphand</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">casual</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
 </resources>
