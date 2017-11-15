@@ -1,6 +1,15 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable name="viewModel" type="com.newton.tr.memberberry.Models.ViewModel" />
+    </data>
+
+<android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.newton.tr.memberberry.Fragments.TabTask">
@@ -28,19 +37,19 @@
         android:textColor="@color/pastelCream"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnRemove_Tagged"
+        app:layout_constraintEnd_toStartOf="@+id/btnDelete_Tasks"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnRemove_Tagged"
+        android:id="@+id/btnDelete_Tasks"
         android:layout_width="@dimen/box_button_width"
         android:layout_height="@dimen/box_button_height"
         android:background="@layout/custom_button"
         android:fontFamily="@font/snaphand"
         android:padding="5dp"
-        android:text="Remove Tagged Tasks"
-        android:visibility="visible"
+        android:text="@{viewModel.test}"
+        android:visibility="@{viewModel.taskDeleteMode ? View.VISIBLE : View.GONE, default = gone}"
         android:textColor="@color/pastelCream"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -49,3 +58,4 @@
         app:layout_constraintStart_toEndOf="@+id/btnAdd_Task" />
 
 </android.support.constraint.ConstraintLayout>
+</layout>

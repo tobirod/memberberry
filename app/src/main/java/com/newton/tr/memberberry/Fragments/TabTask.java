@@ -2,6 +2,7 @@ package com.newton.tr.memberberry.Fragments;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -19,7 +20,9 @@ import android.widget.Toast;
 
 import com.newton.tr.memberberry.Adapters.TaskRecyclerViewAdapter;
 import com.newton.tr.memberberry.Models.Task;
+import com.newton.tr.memberberry.Models.ViewModel;
 import com.newton.tr.memberberry.R;
+import com.newton.tr.memberberry.databinding.FragmentTabTaskBinding;
 
 import java.util.Date;
 import java.util.Calendar;
@@ -40,7 +43,7 @@ public class TabTask extends Fragment {
 
     Realm taskRealm;
     private RecyclerView recyclerView;
-    private TaskRecyclerViewAdapter adapter;
+    private ViewModel viewModel = new ViewModel();
 
     int taskPrioBuffer;
 
@@ -79,7 +82,9 @@ public class TabTask extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -90,18 +95,32 @@ public class TabTask extends Fragment {
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_tab_task, container, true);
+
+        FragmentTabTaskBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_task, container, false);
+        View view = binding.getRoot();
+        binding.setViewModel(viewModel);
 
         recyclerView = view.findViewById(R.id.recyclerView_Task);
         Button newTaskButton = view.findViewById(R.id.btnAdd_Task);
+        final Button deleteTasksButton = view.findViewById(R.id.btnDelete_Tasks);
 
         newTaskButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+                String falsuu = "false";
+                String trueru = "true";
+
+                if (viewModel.getTaskDeleteMode()) {
+                    viewModel.setTaskDeleteMode(false);
+                   // deleteTasksButton.setVisibility(View.VISIBLE);
+                } else {
+                    viewModel.setTaskDeleteMode(true);
+                    //deleteTasksButton.setVisibility(View.GONE);
+                }
+
+                /*AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
                 final View taskView = getLayoutInflater().inflate(R.layout.alertdialog_task, null);
 
                 final EditText taskString = taskView.findViewById(R.id.taskEditText);
@@ -177,7 +196,7 @@ public class TabTask extends Fragment {
                         taskDialog.dismiss();
 
                     }
-                });
+                });*/
             }
         });
 
@@ -243,7 +262,7 @@ public class TabTask extends Fragment {
     }
 
     private void setUpRecyclerView() {
-        adapter = new TaskRecyclerViewAdapter(taskRealm.where(Task.class).findAll());
+        TaskRecyclerViewAdapter adapter = new TaskRecyclerViewAdapter(taskRealm.where(Task.class).findAll());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);

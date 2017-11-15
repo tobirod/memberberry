@@ -16,20 +16,9 @@ import com.newton.tr.memberberry.Adapters.FragmentPagerAdapter;
 import com.newton.tr.memberberry.Fragments.TabNote;
 import com.newton.tr.memberberry.Fragments.TabShop;
 import com.newton.tr.memberberry.Fragments.TabTask;
-import com.newton.tr.memberberry.Models.Task;
 import com.newton.tr.memberberry.R;
 
-import java.util.Date;
-
-import io.realm.Realm;
-import io.realm.RealmResults;
-
 public class MainActivity extends AppCompatActivity implements TabTask.OnFragmentInteractionListener, TabShop.OnFragmentInteractionListener, TabNote.OnFragmentInteractionListener {
-
-    private Realm realm;
-    private Realm taskRealm;
-    private Date currentDate;
-    private RealmResults<Task> allTasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +28,6 @@ public class MainActivity extends AppCompatActivity implements TabTask.OnFragmen
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        realm = Realm.getDefaultInstance();
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
 

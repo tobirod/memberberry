@@ -1,26 +1,32 @@
 package com.newton.tr.memberberry.Adapters;
 
+import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.newton.tr.memberberry.Models.Task;
+import com.newton.tr.memberberry.Models.ViewModel;
 import com.newton.tr.memberberry.R;
+import com.newton.tr.memberberry.databinding.FragmentTabTaskBinding;
+import com.newton.tr.memberberry.databinding.RowBinding;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmRecyclerViewAdapter;
 
-import static android.content.ContentValues.TAG;
-
 public class TaskRecyclerViewAdapter extends RealmRecyclerViewAdapter<Task, TaskRecyclerViewAdapter.TaskViewHolder> {
+
+    private ViewModel viewModel = new ViewModel();
 
     public TaskRecyclerViewAdapter(OrderedRealmCollection<Task> data) {
         super(data, true);
@@ -29,9 +35,17 @@ public class TaskRecyclerViewAdapter extends RealmRecyclerViewAdapter<Task, Task
 
     @Override
     public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row, parent, false);
 
-        return new TaskViewHolder(itemView);
+
+        Context context = parent.getContext();
+
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+
+        RowBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.row, parent, false);
+        View view = binding.getRoot();
+        binding.setViewModel(viewModel);
+
+        return new TaskViewHolder(view);
     }
 
     @Override
@@ -64,6 +78,17 @@ public class TaskRecyclerViewAdapter extends RealmRecyclerViewAdapter<Task, Task
                 updateStatus(itemPosition, holder.data.getUUID());
             }
         });
+
+        holder.deletedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (viewModel.getTaskDeleteMode()) {
+                    viewModel.setTaskDeleteMode(false);
+                } else {
+                    viewModel.setTaskDeleteMode(true);
+                }
+            }
+        });
     }
 
     @Override
@@ -83,7 +108,7 @@ public class TaskRecyclerViewAdapter extends RealmRecyclerViewAdapter<Task, Task
         }
     }
 
-    public void updateStatus(final int position, String taskUUID) {
+    private void updateStatus(final int position, String taskUUID) {
 
         Realm taskRealm = Realm.getDefaultInstance();
 
@@ -95,11 +120,9 @@ public class TaskRecyclerViewAdapter extends RealmRecyclerViewAdapter<Task, Task
             @Override
             public void execute(Realm realm) {
 
-                assert updateTask != null;
-
                 if (updateTaskStatus) {
                     updateTask.setStatus(false);
-                } else if (!updateTaskStatus){
+                } else {
                     updateTask.setStatus(true);
                 }
             }

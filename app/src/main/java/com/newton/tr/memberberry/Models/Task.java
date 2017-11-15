@@ -14,7 +14,6 @@ public class Task extends RealmObject {
         @IntDef({TASKPRIOHIGH, TASKPRIOMEDIUM, TASKPRIOLOW})
 
     @interface taskPrio {}
-
     private static final int TASKPRIOHIGH = 0;
     private static final int TASKPRIOMEDIUM = 1;
     private static final int TASKPRIOLOW = 2;
@@ -25,7 +24,6 @@ public class Task extends RealmObject {
     private int prioLevel;
     private Date dateAdded;
     private String task;
-
 
 
     public long getId() { return id; }
