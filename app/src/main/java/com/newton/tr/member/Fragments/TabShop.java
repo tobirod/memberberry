@@ -1,4 +1,4 @@
-package com.newton.tr.memberberry.Fragments;
+package com.newton.tr.member.Fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.newton.tr.memberberry.R;
+import com.newton.tr.member.R;
 
 
 /**

@@ -1,11 +1,9 @@
-package com.newton.tr.memberberry.Fragments;
+package com.newton.tr.member.Fragments;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,20 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.RadioGroup;
-import android.widget.Toast;
 
-import com.newton.tr.memberberry.Adapters.TaskRecyclerViewAdapter;
-import com.newton.tr.memberberry.Models.Task;
-import com.newton.tr.memberberry.Models.ViewModel;
-import com.newton.tr.memberberry.R;
-import com.newton.tr.memberberry.databinding.FragmentTabTaskBinding;
-
-import java.util.Date;
-import java.util.Calendar;
-import java.util.UUID;
+import com.newton.tr.member.Adapters.TaskRecyclerViewAdapter;
+import com.newton.tr.member.Models.Task;
+import com.newton.tr.member.Models.ViewModel;
+import com.newton.tr.member.R;
+import com.newton.tr.member.databinding.FragmentTabTaskBinding;
 
 import io.realm.Realm;
 

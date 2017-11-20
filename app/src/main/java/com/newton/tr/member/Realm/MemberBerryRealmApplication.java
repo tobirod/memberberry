@@ -1,4 +1,4 @@
-package com.newton.tr.memberberry.Realm;
+package com.newton.tr.member.Realm;
 
 import android.app.Application;
 

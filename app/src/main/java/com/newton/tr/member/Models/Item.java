@@ -1,6 +1,5 @@
-package com.newton.tr.memberberry.Models;
+package com.newton.tr.member.Models;
 
-import io.realm.Realm;
 import io.realm.RealmObject;
 
 /**

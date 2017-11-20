@@ -1,4 +1,4 @@
-package com.newton.tr.memberberry.Activities;
+package com.newton.tr.member.Activities;
 
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
@@ -12,11 +12,11 @@ import android.view.MenuItem;
 
 import android.widget.TextView;
 
-import com.newton.tr.memberberry.Adapters.FragmentPagerAdapter;
-import com.newton.tr.memberberry.Fragments.TabNote;
-import com.newton.tr.memberberry.Fragments.TabShop;
-import com.newton.tr.memberberry.Fragments.TabTask;
-import com.newton.tr.memberberry.R;
+import com.newton.tr.member.Adapters.FragmentPagerAdapter;
+import com.newton.tr.member.Fragments.TabNote;
+import com.newton.tr.member.Fragments.TabShop;
+import com.newton.tr.member.Fragments.TabTask;
+import com.newton.tr.member.R;
 
 public class MainActivity extends AppCompatActivity implements TabTask.OnFragmentInteractionListener, TabShop.OnFragmentInteractionListener, TabNote.OnFragmentInteractionListener {
 

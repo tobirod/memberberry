@@ -1,10 +1,10 @@
-package com.newton.tr.memberberry.Models;
+package com.newton.tr.member.Models;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.util.Log;
 
-import com.newton.tr.memberberry.BR;
+import com.newton.tr.member.BR;
 
 public class ViewModel extends BaseObservable {
 

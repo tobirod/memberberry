@@ -1,11 +1,10 @@
-package com.newton.tr.memberberry.Adapters;
+package com.newton.tr.member.Adapters;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +13,10 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import com.newton.tr.memberberry.Models.Task;
-import com.newton.tr.memberberry.Models.ViewModel;
-import com.newton.tr.memberberry.R;
-import com.newton.tr.memberberry.databinding.FragmentTabTaskBinding;
-import com.newton.tr.memberberry.databinding.RowBinding;
+import com.newton.tr.member.Models.Task;
+import com.newton.tr.member.Models.ViewModel;
+import com.newton.tr.member.R;
+import com.newton.tr.member.databinding.RowBinding;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;

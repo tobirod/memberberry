@@ -1,4 +1,4 @@
-package com.newton.tr.memberberry;
+package com.newton.tr.member;
 
 import org.junit.Test;
 

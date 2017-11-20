@@ -1,6 +1,6 @@
-package com.newton.tr.memberberry.Realm;
+package com.newton.tr.member.Realm;
 
-import com.newton.tr.memberberry.Models.Task;
+import com.newton.tr.member.Models.Task;
 
 import io.realm.DynamicRealm;
 import io.realm.FieldAttribute;

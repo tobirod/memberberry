@@ -1,4 +1,4 @@
-package com.newton.tr.memberberry.Models;
+package com.newton.tr.member.Models;
 
 import android.support.annotation.IntDef;
 
@@ -13,12 +13,12 @@ public class Task extends RealmObject {
     @Retention(RetentionPolicy.SOURCE)
         @IntDef({TASKPRIOHIGH, TASKPRIOMEDIUM, TASKPRIOLOW})
 
-    @interface taskPrio {}
+    @interface TASKPRIO {}
     private static final int TASKPRIOHIGH = 0;
     private static final int TASKPRIOMEDIUM = 1;
     private static final int TASKPRIOLOW = 2;
 
-    private long id;
+    private long ID;
     private String UUID;
     private boolean status;
     private int prioLevel;
@@ -26,8 +26,8 @@ public class Task extends RealmObject {
     private String task;
 
 
-    public long getId() { return id; }
-    public void setId(long id) { this.id = id; }
+    public long getId() { return ID; }
+    public void setId(long ID) { this.ID = ID; }
 
     public String getUUID() { return UUID; }
     public void setUUID(String UUID) { this.UUID = UUID; }
