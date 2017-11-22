@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.newton.tr.member.App.App;
+
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DBHelper";
@@ -13,6 +15,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    public DBHelper() {
+        super(App.getContext(), DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override

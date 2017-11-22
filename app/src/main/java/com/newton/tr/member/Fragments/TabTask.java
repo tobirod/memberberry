@@ -5,21 +5,26 @@ import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.newton.tr.member.Adapters.TaskRecyclerViewAdapter;
+import com.newton.tr.member.Database.TaskRepo;
 import com.newton.tr.member.Models.Task;
 import com.newton.tr.member.Models.ViewModel;
 import com.newton.tr.member.R;
 import com.newton.tr.member.databinding.FragmentTabTaskBinding;
 
-import io.realm.Realm;
-
+import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,9 +36,11 @@ import io.realm.Realm;
  */
 public class TabTask extends Fragment {
 
-    Realm taskRealm;
     private RecyclerView recyclerView;
     private ViewModel viewModel = new ViewModel();
+    private TaskRepo taskRepo = new TaskRepo();
+    private TaskRecyclerViewAdapter adapter;
+    private ArrayList<Task> tasksToBeDeleted;
 
     int taskPrioBuffer;
 
@@ -79,8 +86,6 @@ public class TabTask extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        taskRealm = Realm.getDefaultInstance();
     }
 
     @Override
@@ -94,23 +99,19 @@ public class TabTask extends Fragment {
         Button newTaskButton = view.findViewById(R.id.btnAdd_Task);
         final Button deleteTasksButton = view.findViewById(R.id.btnDelete_Tasks);
 
+        deleteTasksButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteCheckedTasks();
+            }
+        });
+
         newTaskButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                String falsuu = "false";
-                String trueru = "true";
-
-                if (viewModel.getTaskDeleteMode()) {
-                    viewModel.setTaskDeleteMode(false);
-                   // deleteTasksButton.setVisibility(View.VISIBLE);
-                } else {
-                    viewModel.setTaskDeleteMode(true);
-                    //deleteTasksButton.setVisibility(View.GONE);
-                }
-
-                /*AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
                 final View taskView = getLayoutInflater().inflate(R.layout.alertdialog_task, null);
 
                 final EditText taskString = taskView.findViewById(R.id.taskEditText);
@@ -160,33 +161,20 @@ public class TabTask extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        long taskId = taskRealm.where(Task.class).count();
-                        String taskUUID = UUID.randomUUID().toString();
                         int taskPrio = taskPrioBuffer;
-                        Date taskDateAdded = Calendar.getInstance().getTime();
+                        String taskDateAdded = String.valueOf(Calendar.getInstance().getTime());
                         String taskContent = taskString.getText().toString();
 
-                        taskRealm.beginTransaction();
-
-                        Task newTask = new Task();
-
-                        newTask.setId(taskId);
-                        newTask.setUUID(taskUUID);
-                        newTask.setStatus(false);
-                        newTask.setPrioLevel(taskPrio);
-                        newTask.setDateAdded(taskDateAdded);
-                        newTask.setTask(taskContent);
-
-                        taskRealm.copyToRealm(newTask);
-
-                        taskRealm.commitTransaction();
+                        taskRepo.addTask(taskRepo.getAllTasks().size(),false, taskPrio, taskDateAdded, taskContent);
 
                         Toast.makeText(getContext(), "Task added successfully.", Toast.LENGTH_SHORT).show();
+
+                        adapter.refreshRecyclerView(taskRepo.getAllTasks());
 
                         taskDialog.dismiss();
 
                     }
-                });*/
+                });
             }
         });
 
@@ -215,8 +203,6 @@ public class TabTask extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        taskRealm.close();
     }
 
     @Override
@@ -252,10 +238,33 @@ public class TabTask extends Fragment {
     }
 
     private void setUpRecyclerView() {
-        TaskRecyclerViewAdapter adapter = new TaskRecyclerViewAdapter(taskRealm.where(Task.class).findAll());
+        adapter = new TaskRecyclerViewAdapter(taskRepo.getAllTasks(), TabTask.this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
 
+    }
+
+    public void setDeleteButtonVisibility(ArrayList<Task> entriesToBeDeleted) {
+        if (entriesToBeDeleted.size() > 0) {
+            viewModel.setTaskDeleteMode(true);
+        } else {
+            viewModel.setTaskDeleteMode(false);
+        }
+
+        this.tasksToBeDeleted = entriesToBeDeleted;
+    }
+
+    public void deleteCheckedTasks() {
+
+        for (int i = 0; i < tasksToBeDeleted.size(); i++) {
+
+            taskRepo.deleteTask(tasksToBeDeleted.get(i).getId(), tasksToBeDeleted.get(i).getTask());
+            adapter.remove(1);
+        }
+
+        tasksToBeDeleted.clear();
+
+        setDeleteButtonVisibility(tasksToBeDeleted);
     }
 }

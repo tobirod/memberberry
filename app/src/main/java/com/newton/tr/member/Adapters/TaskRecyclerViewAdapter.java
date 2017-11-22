@@ -1,131 +1,111 @@
 package com.newton.tr.member.Adapters;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.newton.tr.member.Fragments.TabTask;
 import com.newton.tr.member.Models.Task;
 import com.newton.tr.member.Models.ViewModel;
 import com.newton.tr.member.R;
-import com.newton.tr.member.databinding.RowBinding;
 
-import io.realm.OrderedRealmCollection;
-import io.realm.Realm;
-import io.realm.RealmRecyclerViewAdapter;
+import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
-public class TaskRecyclerViewAdapter extends RealmRecyclerViewAdapter<Task, TaskRecyclerViewAdapter.TaskViewHolder> {
-
+public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
+    private ArrayList<Task> taskList;
+    private ArrayList<Task> tasksToBeDeleted = new ArrayList<>();
+    private ArrayList<Integer> positionsOfDeleted = new ArrayList<>();
     private ViewModel viewModel = new ViewModel();
-
-    public TaskRecyclerViewAdapter(OrderedRealmCollection<Task> data) {
-        super(data, true);
-        setHasStableIds(true);
-    }
-
-    @Override
-    public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    private TabTask tabTask;
 
 
-        Context context = parent.getContext();
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        // each data item is just a string in this case
+        public TextView taskDesc;
+        public TextView taskDate;
+        public CheckBox checkBox;
+        public View layout;
 
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-
-        RowBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.row, parent, false);
-        View view = binding.getRoot();
-        binding.setViewModel(viewModel);
-
-        return new TaskViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(final TaskViewHolder holder, int position) {
-        final Task obj = getItem(position);
-        holder.data = obj;
-        //noinspection ConstantConditions
-
-        final int itemPosition = holder.getAdapterPosition();
-
-        assert obj != null;
-
-        if (holder.data.getStatus()) {
-            holder.title.setText(obj.getTask());
-            holder.title.setTextColor(Color.GRAY);
-            holder.title.setTypeface(holder.title.getTypeface(), Typeface.ITALIC);
-            holder.title.setPaintFlags(holder.title.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        } else {
-            holder.title.setText(obj.getTask());
-            holder.title.setTextColor(Color.DKGRAY);
-            holder.title.setTypeface(holder.title.getTypeface(), Typeface.BOLD);
-            holder.title.setPaintFlags(0);
-
+        public ViewHolder(View v) {
+            super(v);
+            layout = v;
+            taskDesc = v.findViewById(R.id.taskDesc);
+            taskDate = v.findViewById(R.id.taskDate);
+            checkBox = v.findViewById(R.id.checkBox);
         }
+    }
 
-        holder.title.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    public void add(int position, Task task) {
+        taskList.add(position, task);
+        notifyItemInserted(position);
+    }
 
-                updateStatus(itemPosition, holder.data.getUUID());
-            }
-        });
+    public void remove(int position) {
+        taskList.remove(position);
+        notifyItemRemoved(position);
+    }
 
-        holder.deletedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+    // Provide a suitable constructor (depends on the kind of dataset)
+    public TaskRecyclerViewAdapter(ArrayList<Task> taskData, TabTask tabTask) {
+        this.taskList = taskData;
+        this.tabTask = tabTask;
+    }
+
+    @Override
+    public TaskRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View v = inflater.inflate(R.layout.row_layout, parent, false);
+
+        // set the view's size, margins, paddings and layout parameters
+        return new ViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(TaskRecyclerViewAdapter.ViewHolder holder, final int position) {
+        final Task mTask = taskList.get(position);
+        holder.taskDesc.setText(mTask.getTask());
+        holder.taskDate.setText(mTask.getDateAdded());
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (viewModel.getTaskDeleteMode()) {
-                    viewModel.setTaskDeleteMode(false);
+
+                if (isChecked) {
+                    tasksToBeDeleted.add(mTask);
+                    positionsOfDeleted.add(position);
                 } else {
-                    viewModel.setTaskDeleteMode(true);
+                    tasksToBeDeleted.remove(mTask);
+                    if (positionsOfDeleted.contains(position)) {
+                        positionsOfDeleted.remove(position);
+                    }
                 }
+
+                tabTask.setDeleteButtonVisibility(tasksToBeDeleted);
             }
         });
     }
 
     @Override
-    public long getItemId(int index) {
-        //noinspection ConstantConditions
-        return getItem(index).getId();
+    public int getItemCount() {
+        return taskList.size();
     }
 
-    class TaskViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
-        CheckBox deletedCheckBox;
-        public Task data;
-        TaskViewHolder(View view) {
-            super(view);
-            title = view.findViewById(R.id.textview);
-            deletedCheckBox = view.findViewById(R.id.checkBox);
-        }
-    }
+    public void refreshRecyclerView(ArrayList<Task> newTasks)
+    {
+        if(newTasks == null || newTasks.size()==0)
+            return;
+        if (taskList != null && taskList.size()>0)
+            taskList.clear();
+        taskList.addAll(newTasks);
+        notifyDataSetChanged();
 
-    private void updateStatus(final int position, String taskUUID) {
-
-        Realm taskRealm = Realm.getDefaultInstance();
-
-        final Task updateTask = taskRealm.where(Task.class).equalTo("UUID", taskUUID).findFirst();
-
-        final boolean updateTaskStatus = updateTask.getStatus();
-
-        taskRealm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-
-                if (updateTaskStatus) {
-                    updateTask.setStatus(false);
-                } else {
-                    updateTask.setStatus(true);
-                }
-            }
-        });
-
-        notifyItemChanged(position);
     }
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+<data>
+    <variable name="ViewModel" type="com.newton.tr.member.Models.ViewModel" />
+</data>
+
+<RelativeLayout
+    android:layout_height="56dp"
+    android:layout_width="match_parent">
+
+    <TextView
+        android:id="@+id/taskDesc"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@id/checkBox"
+        android:ellipsize="marquee"
+        android:gravity="bottom"
+        android:singleLine="true"
+        android:text="Task"
+        android:paddingStart="5dp"
+        android:fontFamily="@font/komika_text"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/taskDate"
+        android:layout_width="fill_parent"
+        android:layout_height="26dp"
+        android:layout_below="@id/taskDesc"
+        android:layout_toStartOf="@id/checkBox"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:fontFamily="@font/komika_text"
+        android:text="Date added"
+        android:paddingStart="5dp"
+        android:textSize="13sp" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:buttonTint="@color/grape"
+        android:padding="10dp" />
+
+</RelativeLayout>
+</layout>
+

@@ -4,7 +4,7 @@
 
     <application
         android:allowBackup="true"
-        android:name="com.newton.tr.member.Realm.MemberBerryRealmApplication"
+        android:name=".App.App"
         android:icon="@mipmap/ic_launcher_member"
         android:label="MemberBerry"
         android:roundIcon="@mipmap/ic_launcher_member"

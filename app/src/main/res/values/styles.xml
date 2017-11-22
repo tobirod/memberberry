@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -17,7 +17,7 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="Base.Widget.Design.TabLayout" parent="android:Widget">
+    <style name="Base.Widget.Design.TabLayout" parent="android:Widget" tools:override="true">
         <item name="tabBackground">@drawable/tab_background</item>
         <item name="tabIndicatorColor">@color/pastelOrange</item>
         <item name="tabIndicatorHeight">3dp</item>
@@ -32,7 +32,7 @@
     <style name="customRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:textColor">@color/plum</item>
         <item name="buttonTint">@color/plum</item>
-        <item name="android:fontFamily">casual</item>
+        <item name="android:fontFamily">@font/komika_text</item>
         <item name="android:textSize">15sp</item>
     </style>
 

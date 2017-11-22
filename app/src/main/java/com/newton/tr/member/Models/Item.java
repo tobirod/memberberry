@@ -1,13 +1,7 @@
 package com.newton.tr.member.Models;
 
-import io.realm.RealmObject;
+public class Item {
 
-/**
- * Created by tobias on 2017-10-11.
- */
-
-public class Item extends RealmObject {
-    String ja;
 }
 
 

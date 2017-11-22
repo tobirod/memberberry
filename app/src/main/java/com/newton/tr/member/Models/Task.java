@@ -4,11 +4,16 @@ import android.support.annotation.IntDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.Date;
 
-import io.realm.RealmObject;
+public class Task {
 
-public class Task extends RealmObject {
+    public Task(int taskID, boolean taskStatus, int prioLevel, String dateAdded, String task) {
+        this.ID = taskID;
+        this.status = taskStatus;
+        this.prioLevel = prioLevel;
+        this.dateAdded = dateAdded;
+        this.task = task;
+    }
 
     @Retention(RetentionPolicy.SOURCE)
         @IntDef({TASKPRIOHIGH, TASKPRIOMEDIUM, TASKPRIOLOW})
@@ -18,19 +23,15 @@ public class Task extends RealmObject {
     private static final int TASKPRIOMEDIUM = 1;
     private static final int TASKPRIOLOW = 2;
 
-    private long ID;
-    private String UUID;
+    private int ID;
     private boolean status;
     private int prioLevel;
-    private Date dateAdded;
+    private String dateAdded;
     private String task;
 
 
-    public long getId() { return ID; }
-    public void setId(long ID) { this.ID = ID; }
-
-    public String getUUID() { return UUID; }
-    public void setUUID(String UUID) { this.UUID = UUID; }
+    public int getId() { return ID; }
+    public void setId(int ID) { this.ID = ID; }
 
     public boolean getStatus() { return status; }
     public void setStatus(boolean status) { this.status = status; }
@@ -38,8 +39,8 @@ public class Task extends RealmObject {
     public int getPrioLevel() { return prioLevel; }
     public void setPrioLevel(int prioLevel) { this.prioLevel = prioLevel; }
 
-    public Date getDateAdded() { return dateAdded; }
-    public void setDateAdded(Date dateAdded) { this.dateAdded = dateAdded; }
+    public String getDateAdded() { return dateAdded; }
+    public void setDateAdded(String dateAdded) { this.dateAdded = dateAdded; }
 
     public String getTask() { return task; }
     public void setTask(String task) { this.task = task; }

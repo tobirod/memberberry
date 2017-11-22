@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBManager {
+
     private Integer mOpenCounter = 0;
 
     private static DBManager instance;
