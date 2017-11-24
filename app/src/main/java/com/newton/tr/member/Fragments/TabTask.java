@@ -40,7 +40,6 @@ public class TabTask extends Fragment {
     private ViewModel viewModel = new ViewModel();
     private TaskRepo taskRepo = new TaskRepo();
     private TaskRecyclerViewAdapter adapter;
-    private ArrayList<Task> tasksToBeDeleted;
 
     int taskPrioBuffer;
 
@@ -102,7 +101,7 @@ public class TabTask extends Fragment {
         deleteTasksButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteCheckedTasks();
+                adapter.deleteCheckedTasks();
             }
         });
 
@@ -245,26 +244,11 @@ public class TabTask extends Fragment {
 
     }
 
-    public void setDeleteButtonVisibility(ArrayList<Task> entriesToBeDeleted) {
-        if (entriesToBeDeleted.size() > 0) {
+    public void setDeleteButtonVisibility(int entriesToBeDeleted) {
+        if (entriesToBeDeleted > 0) {
             viewModel.setTaskDeleteMode(true);
         } else {
             viewModel.setTaskDeleteMode(false);
         }
-
-        this.tasksToBeDeleted = entriesToBeDeleted;
-    }
-
-    public void deleteCheckedTasks() {
-
-        for (int i = 0; i < tasksToBeDeleted.size(); i++) {
-
-            taskRepo.deleteTask(tasksToBeDeleted.get(i).getId(), tasksToBeDeleted.get(i).getTask());
-            adapter.remove(1);
-        }
-
-        tasksToBeDeleted.clear();
-
-        setDeleteButtonVisibility(tasksToBeDeleted);
     }
 }

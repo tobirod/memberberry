@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.newton.tr.member.Database.TaskRepo;
 import com.newton.tr.member.Fragments.TabTask;
 import com.newton.tr.member.Models.Task;
 import com.newton.tr.member.Models.ViewModel;
@@ -21,9 +22,8 @@ import java.util.ConcurrentModificationException;
 
 public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
     private ArrayList<Task> taskList;
-    private ArrayList<Task> tasksToBeDeleted = new ArrayList<>();
-    private ArrayList<Integer> positionsOfDeleted = new ArrayList<>();
-    private ViewModel viewModel = new ViewModel();
+    private ArrayList<TaskPackage> tasksToBeDeleted = new ArrayList<>();
+    private TaskRepo taskRepo = new TaskRepo();
     private TabTask tabTask;
 
 
@@ -44,19 +44,34 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     }
 
     public void add(int position, Task task) {
+
         taskList.add(position, task);
         notifyItemInserted(position);
     }
 
-    public void remove(int position) {
-        taskList.remove(position);
-        notifyItemRemoved(position);
+    public void remove(int position, Task task) {
+
+        taskRepo.deleteTask(task.getId(), task.getTask());
+
+        int pos = taskList.indexOf(task);
+        taskList.remove(pos);
+        notifyItemRemoved(pos);
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public TaskRecyclerViewAdapter(ArrayList<Task> taskData, TabTask tabTask) {
         this.taskList = taskData;
         this.tabTask = tabTask;
+    }
+
+    public class TaskPackage {
+        Task task;
+        int position;
+
+        public TaskPackage(Task taskToDelete, int positionToDelete) {
+            task = taskToDelete;
+            position = positionToDelete;
+        }
     }
 
     @Override
@@ -69,26 +84,27 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(TaskRecyclerViewAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(TaskRecyclerViewAdapter.ViewHolder holder, int position) {
         final Task mTask = taskList.get(position);
         holder.taskDesc.setText(mTask.getTask());
         holder.taskDate.setText(mTask.getDateAdded());
+
+        final int taskPosition = holder.getAdapterPosition();
 
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
+
+                TaskPackage taskPackage = new TaskPackage(mTask, taskPosition);
+
                 if (isChecked) {
-                    tasksToBeDeleted.add(mTask);
-                    positionsOfDeleted.add(position);
+                    tasksToBeDeleted.add(taskPackage);
                 } else {
-                    tasksToBeDeleted.remove(mTask);
-                    if (positionsOfDeleted.contains(position)) {
-                        positionsOfDeleted.remove(position);
-                    }
+                    tasksToBeDeleted.remove(taskPackage);
                 }
 
-                tabTask.setDeleteButtonVisibility(tasksToBeDeleted);
+                tabTask.setDeleteButtonVisibility(tasksToBeDeleted.size());
             }
         });
     }
@@ -107,5 +123,24 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
         taskList.addAll(newTasks);
         notifyDataSetChanged();
 
+    }
+
+    public void deleteCheckedTasks() {
+
+        for (int i = 0; i < tasksToBeDeleted.size(); i++) {
+
+            TaskPackage taskPackageBuffer = tasksToBeDeleted.get(i);
+
+            Task taskBuffer = taskPackageBuffer.task;
+            int positionBuffer = taskPackageBuffer.position;
+
+            remove(positionBuffer, taskBuffer);
+        }
+
+        tasksToBeDeleted.clear();
+
+        tabTask.setDeleteButtonVisibility(tasksToBeDeleted.size());
+
+        notifyDataSetChanged();
     }
 }
