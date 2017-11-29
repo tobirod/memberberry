@@ -30,23 +30,4 @@ public class ViewModel extends BaseObservable {
     @Bindable
     public void setNoteDeleteMode(boolean noteDeleteMode) { this.noteDeleteMode = noteDeleteMode; notifyPropertyChanged(BR.noteDeleteMode);}
 
-    public void asd() {
-        setTaskDeleteMode(false);
-        Log.i("t", "jasj");
-    }
-
-
-
-
-
-
-
-//    @Bindable
-//    public int setVisibility(int entriesToBeDeleted, boolean enableDeletionMode) {
-//        if (entriesToBeDeleted <= 0) {
-//            this.taskDeleteMode = enableDeletionMode;
-//            notifyPropertyChanged(BR.noteDeleteMode);
-//        } else
-//    }
-
 }

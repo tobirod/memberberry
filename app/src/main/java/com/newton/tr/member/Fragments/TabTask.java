@@ -114,7 +114,6 @@ public class TabTask extends Fragment {
                 final View taskView = getLayoutInflater().inflate(R.layout.alertdialog_task, null);
 
                 final EditText taskString = taskView.findViewById(R.id.taskEditText);
-                final RadioGroup taskPrioRadioGroup = taskView.findViewById(R.id.taskPrioRadioGroup);
                 final Button cancelButton = taskView.findViewById(R.id.taskAlertDialogCancel);
                 final Button doneButton = taskView.findViewById(R.id.taskAlertDialogDone);
 
@@ -123,30 +122,6 @@ public class TabTask extends Fragment {
                 dialogBuilder.setView(taskView);
                 final AlertDialog taskDialog = dialogBuilder.create();
                 taskDialog.show();
-
-                taskPrioRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        int id = taskPrioRadioGroup.getCheckedRadioButtonId();
-
-                        switch (id) {
-                            case R.id.taskRadioHighBtn:
-                                taskPrioBuffer = 0;
-                                break;
-
-                            case R.id.taskRadioMediumBtn:
-                                taskPrioBuffer = 1;
-                                break;
-
-                            case R.id.taskRadioLowBtn:
-                                taskPrioBuffer = 2;
-                                break;
-
-                            default:
-                                break;
-                        }
-                    }
-                });
 
                 cancelButton.setOnClickListener(new View.OnClickListener() {
 
@@ -160,11 +135,10 @@ public class TabTask extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        int taskPrio = taskPrioBuffer;
                         String taskDateAdded = String.valueOf(Calendar.getInstance().getTime());
                         String taskContent = taskString.getText().toString();
 
-                        taskRepo.addTask(taskRepo.getAllTasks().size(),false, taskPrio, taskDateAdded, taskContent);
+                        taskRepo.addTask(taskRepo.getAllTasks().size(),false, taskDateAdded, taskContent);
 
                         Toast.makeText(getContext(), "Task added successfully.", Toast.LENGTH_SHORT).show();
 
@@ -241,7 +215,6 @@ public class TabTask extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
-
     }
 
     public void setDeleteButtonVisibility(int entriesToBeDeleted) {

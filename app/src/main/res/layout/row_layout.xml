@@ -10,35 +10,53 @@
     android:layout_height="56dp"
     android:layout_width="match_parent">
 
-    <TextView
-        android:id="@+id/taskDesc"
-        android:layout_width="fill_parent"
-        android:layout_height="30dp"
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/taskTable"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@id/checkBox"
-        android:ellipsize="marquee"
-        android:gravity="bottom"
-        android:singleLine="true"
-        android:text="Task"
-        android:paddingStart="5dp"
-        android:fontFamily="@font/komika_text"
-        android:textAllCaps="false"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:layout_toStartOf="@id/checkBox" >
 
-    <TextView
-        android:id="@+id/taskDate"
-        android:layout_width="fill_parent"
-        android:layout_height="26dp"
-        android:layout_below="@id/taskDesc"
-        android:layout_toStartOf="@id/checkBox"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:fontFamily="@font/komika_text"
-        android:text="Date added"
-        android:paddingStart="5dp"
-        android:textSize="13sp" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/taskDesc"
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:ellipsize="marquee"
+                android:gravity="bottom"
+                android:textColor="@color/charcoal"
+                android:singleLine="true"
+                android:text="Task"
+                android:paddingStart="5dp"
+                android:paddingEnd="0dp"
+                android:fontFamily="@font/komika_text"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/taskDate"
+                android:layout_width="fill_parent"
+                android:layout_height="26dp"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:textColor="@color/darkGray"
+                android:fontFamily="@font/komika_text"
+                android:text="Date added"
+                android:paddingStart="5dp"
+                android:paddingEnd="0dp"
+                android:textSize="13sp" />
+
+        </TableRow>
+
+    </TableLayout>
 
     <CheckBox
         android:id="@+id/checkBox"
