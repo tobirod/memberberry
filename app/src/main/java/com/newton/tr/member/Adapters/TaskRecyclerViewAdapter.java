@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +19,12 @@ import com.newton.tr.member.Models.Task;
 import com.newton.tr.member.R;
 
 import java.util.ArrayList;
-
-import static com.newton.tr.member.R.color.charcoal;
+import java.util.Iterator;
 
 public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
     private ArrayList<Task> taskList;
-    private ArrayList<Task> tasksToBeDeleted = new ArrayList<>();
-    private TaskRepo taskRepo = new TaskRepo();
+    private TaskRepo taskRepo;
     private TabTask tabTask;
-    public static int taskDescTextColor = R.color.charcoal;
-    public static int taskDateTextColor = R.color.darkGray;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -63,6 +60,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     public TaskRecyclerViewAdapter(ArrayList<Task> taskData, TabTask tabTask) {
         this.taskList = taskData;
         this.tabTask = tabTask;
+        this.taskRepo = new TaskRepo();
     }
 
     @Override
@@ -75,38 +73,54 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(final TaskRecyclerViewAdapter.ViewHolder holder, int position) {
-        final Task mTask = taskList.get(position);
+    public void onBindViewHolder(final TaskRecyclerViewAdapter.ViewHolder holder, final int position) {
+        final Task mTask = taskList.get(holder.getAdapterPosition());
         holder.taskDesc.setText(mTask.getTask());
         holder.taskDate.setText(mTask.getDateAdded());
 
-        final int pos = holder.getAdapterPosition();
-
-        if (holder.checkBox.isChecked()) {
-            holder.checkBox.setChecked(false);
-        }
 
         if (mTask.getStatus()) {
-            holder.taskDesc.setPaintFlags(0);
-            holder.taskDesc.setTextColor(holder.taskDesc.getResources().getColor(taskDescTextColor));
-
-            holder.taskDate.setPaintFlags(0);
-            holder.taskDate.setTextColor(holder.taskDate.getResources().getColor(taskDateTextColor));
-
-        } else if (!mTask.getStatus()) {
             holder.taskDesc.setPaintFlags(holder.taskDesc.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             holder.taskDesc.setTextColor(Color.LTGRAY);
 
             holder.taskDate.setPaintFlags(holder.taskDate.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             holder.taskDate.setTextColor(Color.LTGRAY);
 
+        } else if (!mTask.getStatus()) {
+            holder.taskDesc.setPaintFlags(0);
+            int taskDescTextColor = R.color.charcoal;
+            holder.taskDesc.setTextColor(holder.taskDesc.getResources().getColor(taskDescTextColor));
+
+            holder.taskDate.setPaintFlags(0);
+            int taskDateTextColor = R.color.darkGray;
+            holder.taskDate.setTextColor(holder.taskDate.getResources().getColor(taskDateTextColor));
+
         }
+
+        holder.checkBox.setChecked(mTask.getIsChecked());
+        tabTask.setDeleteButtonVisibility(hasTasksToDelete());
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+
+                if (isChecked) {
+                    mTask.setIsChecked(true);
+
+                } else {
+                    mTask.setIsChecked(false);
+
+                }
+
+                tabTask.setDeleteButtonVisibility(hasTasksToDelete());
+            }
+        });
 
         holder.taskTable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                int taskPos = pos;
 
                 int taskID = mTask.getId();
                 boolean taskStatus = mTask.getStatus();
@@ -114,25 +128,12 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
                 String taskDesc = mTask.getTask();
 
                 if (taskStatus) {
-                    updateTaskStatus(taskID, false, taskDate, taskDesc, taskPos);
+                    updateTaskStatus(taskID, 0, taskDate, taskDesc, position);
+
                 } else {
-                    updateTaskStatus(taskID, true, taskDate, taskDesc, taskPos);
+                    updateTaskStatus(taskID, 1, taskDate, taskDesc, position);
+
                 }
-
-            }
-        });
-
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if (isChecked) {
-                    tasksToBeDeleted.add(mTask);
-                } else {
-                    tasksToBeDeleted.remove(mTask);
-                }
-
-                tabTask.setDeleteButtonVisibility(tasksToBeDeleted.size());
             }
         });
     }
@@ -142,42 +143,52 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
         return taskList.size();
     }
 
-    public void refreshRecyclerView(ArrayList<Task> newTasks)
-    {
-        if(newTasks == null || newTasks.size()==0)
-            return;
-        if (taskList != null && taskList.size()>0)
-            taskList.clear();
-        taskList.addAll(newTasks);
-        notifyDataSetChanged();
-
-    }
-
     public void deleteCheckedTasks() {
 
-        for (int i = 0; i < tasksToBeDeleted.size(); i++) {
+        for(Iterator<Task> iterator = this.taskList.iterator(); iterator.hasNext(); ) {
+            Task test = iterator.next();
+            if(test.getIsChecked()) {
+                taskRepo.deleteTask(test.getId(), test.getTask());
+                iterator.remove();
+            }
 
-            int taskID = tasksToBeDeleted.get(i).getId();
-            String task = tasksToBeDeleted.get(i).getTask();
-
-
-            taskRepo.deleteTask(taskID, task);
         }
 
-        tasksToBeDeleted.clear();
+        tabTask.setDeleteButtonVisibility(hasTasksToDelete());
 
-        tabTask.setDeleteButtonVisibility(tasksToBeDeleted.size());
+        notifyDataSetChanged();
+    }
 
+    private void updateTaskStatus(int ID, int status, String dateAdded, String task, int pos) {
+        taskRepo.updateTask(ID, status, dateAdded, task, task);
+        Task mTask = taskList.get(pos);
+
+        boolean newStatus = true;
+
+        if (status == 0) {
+            newStatus = false;
+        }
+
+        mTask.setStatus(newStatus);
+
+        notifyDataSetChanged();
+    }
+
+    public void refreshRecyclerView() {
         taskList = taskRepo.getAllTasks();
 
         notifyDataSetChanged();
     }
 
-    public void updateTaskStatus(int ID, boolean status, String dateAdded, String task, int pos) {
-        taskRepo.updateTask(ID, status, dateAdded, task, task);
+    private boolean hasTasksToDelete() {
 
-        taskList = taskRepo.getAllTasks();
+        for (int i = 0; i < taskList.size(); i++) {
 
-        notifyDataSetChanged();
+            if (taskList.get(i).getIsChecked()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

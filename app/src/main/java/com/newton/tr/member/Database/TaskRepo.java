@@ -61,7 +61,7 @@ public class TaskRepo {
                 String dateAdded = data.getString(2);
                 String task = data.getString(3);
 
-                Task taskBuffer = new Task(taskID, taskStatus, dateAdded, task);
+                Task taskBuffer = new Task(taskID, taskStatus, false, dateAdded, task);
 
                 listData.add(taskBuffer);
 
@@ -87,17 +87,17 @@ public class TaskRepo {
         SQLiteDatabase db = DBManager.getInstance().openDatabase();
         String query = "DELETE FROM " + TASKTABLE_NAME + " WHERE " + COL0 + " = '" + ID + "'" + " AND " + COL3 + " = '" + task + "'";
         Log.d(TAG, "deleteTask: query: '" + query + "'.");
-        Log.d(TAG, "deleteTask: Deleting task: " + ID + ": '" + task + "' from database.");
+        Log.d(TAG, "deleteTask: Deleting task with ID " + ID + "; '" + task + "' from database.");
         db.execSQL(query);
         DBManager.getInstance().closeDatabase();
     }
 
-    public void updateTask(int ID, boolean status, String dateAdded, String task, String oldTask) {
+    public void updateTask(int ID, int status, String dateAdded, String task, String oldTask) {
         SQLiteDatabase db = DBManager.getInstance().openDatabase();
         String query = "UPDATE " + TASKTABLE_NAME + " SET " + COL1 + " = '" + status + "', " + COL2 + " = '" + dateAdded + "', " + COL3 + " = '" + task + "' WHERE " + COL0 + " = '" + ID + "'" + " AND " + COL3 + " = '" + oldTask + "'";
-
         Log.d(TAG, "updateTask: query: '" + query + "'.");
         Log.d(TAG, "updateTask: New task is '" + task + "' and status is '" + status + "'.");
         db.execSQL(query);
+        DBManager.getInstance().closeDatabase();
     }
 }

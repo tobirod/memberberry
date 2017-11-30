@@ -142,7 +142,7 @@ public class TabTask extends Fragment {
 
                         Toast.makeText(getContext(), "Task added successfully.", Toast.LENGTH_SHORT).show();
 
-                        adapter.refreshRecyclerView(taskRepo.getAllTasks());
+                        adapter.refreshRecyclerView();
 
                         taskDialog.dismiss();
 
@@ -217,8 +217,8 @@ public class TabTask extends Fragment {
         recyclerView.setHasFixedSize(true);
     }
 
-    public void setDeleteButtonVisibility(int entriesToBeDeleted) {
-        if (entriesToBeDeleted > 0) {
+    public void setDeleteButtonVisibility(boolean showButton) {
+        if (showButton) {
             viewModel.setTaskDeleteMode(true);
         } else {
             viewModel.setTaskDeleteMode(false);
