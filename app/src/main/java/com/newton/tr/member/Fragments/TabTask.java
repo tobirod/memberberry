@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,11 @@ import com.newton.tr.member.Models.ViewModel;
 import com.newton.tr.member.R;
 import com.newton.tr.member.databinding.FragmentTabTaskBinding;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class TabTask extends Fragment {
 
@@ -203,12 +208,12 @@ public class TabTask extends Fragment {
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_toast, null);
 
-        TextView text = (TextView) layout.findViewById(R.id.toast_text);
-        text.setText(message);
+        TextView toast_text = layout.findViewById(R.id.toast_text);
+        toast_text.setText(message);
 
         Toast toast = new Toast(getContext());
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();
 
@@ -253,7 +258,11 @@ public class TabTask extends Fragment {
                 }
 
                 if (newDate.isChecked()) {
-                    taskDateAdded = String.valueOf(Calendar.getInstance().getTime());
+
+                    Date today = (Calendar.getInstance().getTime());
+                    DateFormat timeFormat = new SimpleDateFormat("YYYY-MM-dd, HH:mm", Locale.getDefault());
+                    taskDateAdded = timeFormat.format(today);
+
                 } else {
                     taskDateAdded = task.getDateAdded();
                 }
