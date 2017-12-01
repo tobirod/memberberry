@@ -76,7 +76,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     public void onBindViewHolder(final TaskRecyclerViewAdapter.ViewHolder holder, final int position) {
         final Task mTask = taskList.get(holder.getAdapterPosition());
         holder.taskDesc.setText(mTask.getTask());
-        holder.taskDate.setText(mTask.getDateAdded());
+        holder.taskDate.setText(tabTask.getString(R.string.row_layout_date_prefix, mTask.getDateAdded()));
 
 
         if (mTask.getStatus()) {

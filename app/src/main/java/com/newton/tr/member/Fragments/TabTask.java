@@ -38,6 +38,8 @@ public class TabTask extends Fragment {
     private ViewModel viewModel = new ViewModel();
     private TaskRepo taskRepo = new TaskRepo();
     private TaskRecyclerViewAdapter adapter;
+    Date today = (Calendar.getInstance().getTime());
+    DateFormat timeFormat = new SimpleDateFormat("YYYY-MM-d, HH:mm z", Locale.getDefault());
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -123,7 +125,7 @@ public class TabTask extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        String taskDateAdded = String.valueOf(Calendar.getInstance().getTime());
+                        String taskDateAdded = timeFormat.format(today);
                         String taskContent = taskString.getText().toString();
 
                         taskRepo.addTask(taskRepo.getAllTasks().size(),false, taskDateAdded, taskContent);
@@ -259,8 +261,6 @@ public class TabTask extends Fragment {
 
                 if (newDate.isChecked()) {
 
-                    Date today = (Calendar.getInstance().getTime());
-                    DateFormat timeFormat = new SimpleDateFormat("YYYY-MM-dd, HH:mm", Locale.getDefault());
                     taskDateAdded = timeFormat.format(today);
 
                 } else {
