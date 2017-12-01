@@ -30,4 +30,10 @@ public class ViewModel extends BaseObservable {
     @Bindable
     public void setNoteDeleteMode(boolean noteDeleteMode) { this.noteDeleteMode = noteDeleteMode; notifyPropertyChanged(BR.noteDeleteMode);}
 
+
+
+
+
+
+
 }
