@@ -1,10 +1,8 @@
 package com.newton.tr.member.Adapters;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +48,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     }
 
     public void remove(int position, Task task) {
-        taskRepo.deleteTask(task.getId(), task.getTask());
+        taskRepo.deleteTask(task.getTaskId(), task.getTaskContent());
         int pos = taskList.indexOf(task);
         taskList.remove(pos);
         notifyItemRemoved(pos);
@@ -66,7 +64,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     @Override
     public TaskRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View v = inflater.inflate(R.layout.row_layout, parent, false);
+        View v = inflater.inflate(R.layout.layout_row_task, parent, false);
 
         // set the view's size, margins, paddings and layout parameters
         return new ViewHolder(v);
@@ -75,18 +73,18 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     @Override
     public void onBindViewHolder(final TaskRecyclerViewAdapter.ViewHolder holder, final int position) {
         final Task mTask = taskList.get(holder.getAdapterPosition());
-        holder.taskDesc.setText(mTask.getTask());
-        holder.taskDate.setText(tabTask.getString(R.string.row_layout_date_prefix, mTask.getDateAdded()));
+        holder.taskDesc.setText(mTask.getTaskContent());
+        holder.taskDate.setText(tabTask.getString(R.string.row_layout_date_prefix, mTask.getTaskDateAdded()));
 
 
-        if (mTask.getStatus()) {
+        if (mTask.getTaskStatus()) {
             holder.taskDesc.setPaintFlags(holder.taskDesc.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             holder.taskDesc.setTextColor(Color.LTGRAY);
 
             holder.taskDate.setPaintFlags(holder.taskDate.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             holder.taskDate.setTextColor(Color.LTGRAY);
 
-        } else if (!mTask.getStatus()) {
+        } else if (!mTask.getTaskStatus()) {
             holder.taskDesc.setPaintFlags(0);
             int taskDescTextColor = R.color.charcoal;
             holder.taskDesc.setTextColor(holder.taskDesc.getResources().getColor(taskDescTextColor));
@@ -122,10 +120,10 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
             public void onClick(View v) {
 
 
-                int taskID = mTask.getId();
-                boolean taskStatus = mTask.getStatus();
-                String taskDate = mTask.getDateAdded();
-                String taskDesc = mTask.getTask();
+                int taskID = mTask.getTaskId();
+                boolean taskStatus = mTask.getTaskStatus();
+                String taskDate = mTask.getTaskDateAdded();
+                String taskDesc = mTask.getTaskContent();
 
                 if (taskStatus) {
                     updateTaskStatus(taskID, 0, taskDate, taskDesc, position);
@@ -159,7 +157,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
         for(Iterator<Task> iterator = this.taskList.iterator(); iterator.hasNext(); ) {
             Task test = iterator.next();
             if(test.getIsChecked()) {
-                taskRepo.deleteTask(test.getId(), test.getTask());
+                taskRepo.deleteTask(test.getTaskId(), test.getTaskContent());
                 iterator.remove();
             }
 
@@ -180,7 +178,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
             newStatus = false;
         }
 
-        mTask.setStatus(newStatus);
+        mTask.setTaskStatus(newStatus);
 
         notifyDataSetChanged();
     }
