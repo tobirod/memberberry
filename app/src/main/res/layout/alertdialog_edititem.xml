@@ -6,7 +6,7 @@
     android:background="@color/pastelCream">
 
     <TextView
-        android:id="@+id/taskTitle"
+        android:id="@+id/itemTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -14,16 +14,16 @@
         android:fontFamily="@font/snaphand"
         android:gravity="center"
         android:padding="10dp"
-        android:text="EDIT TASK"
+        android:text="EDIT ITEM"
         android:textColor="@color/pastelCream"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/taskEditText"
+        app:layout_constraintBottom_toTopOf="@+id/itemEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/taskEditText"
+        android:id="@+id/itemEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -31,61 +31,13 @@
         android:layout_marginTop="32dp"
         android:ems="10"
         android:fontFamily="@font/komika_text"
-        android:hint="What is your task?"
+        android:hint="What do you need to buy?"
         android:inputType="text"
         android:textColor="@color/plum"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskTitle" />
-
-    <TextView
-        android:id="@+id/taskDateHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/komika_header"
-        android:text="Added:"
-        android:textColor="@color/plum"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/taskEditText" />
-
-    <TextView
-        android:id="@+id/currentTaskDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:fontFamily="@font/komika_text"
-        android:text=""
-        android:textColor="@color/plum"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/taskDateHeader"
-        app:layout_constraintStart_toEndOf="@id/taskDateHeader" />
-
-    <RadioGroup
-        android:id="@+id/dateRadioGroup"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/taskDateHeader">
-
-        <RadioButton
-            android:id="@+id/newDateRadioBtn"
-            style="@style/customRadioButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Replace with a new date from today?" />
-
-    </RadioGroup>
+        app:layout_constraintTop_toBottomOf="@+id/itemTitle" />
 
     <Button
         android:id="@+id/taskAlertDialogCancel"
@@ -101,7 +53,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateRadioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/itemEditText" />
 
     <Button
         android:id="@+id/taskAlertDialogDone"
@@ -117,6 +69,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@+id/taskAlertDialogCancel"
-        app:layout_constraintTop_toBottomOf="@+id/dateRadioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/itemEditText" />
 
 </android.support.constraint.ConstraintLayout>

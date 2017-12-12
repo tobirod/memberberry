@@ -1,10 +1,10 @@
-package com.newton.tr.member.App;
+package com.newton.tr.member.app;
 
 import android.app.Application;
 import android.content.Context;
 
-import com.newton.tr.member.Database.DBHelper;
-import com.newton.tr.member.Database.DBManager;
+import com.newton.tr.member.database.DBHelper;
+import com.newton.tr.member.database.DBManager;
 
 public class  App extends Application {
     private static Context context;

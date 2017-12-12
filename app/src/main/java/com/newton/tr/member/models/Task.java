@@ -1,4 +1,4 @@
-package com.newton.tr.member.Models;
+package com.newton.tr.member.models;
 
 public class Task {
 

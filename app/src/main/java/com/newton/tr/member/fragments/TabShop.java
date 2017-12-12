@@ -1,4 +1,4 @@
-package com.newton.tr.member.Fragments;
+package com.newton.tr.member.fragments;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -8,38 +8,29 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.newton.tr.member.Adapters.TaskRecyclerViewAdapter;
-import com.newton.tr.member.Database.TaskRepo;
-import com.newton.tr.member.Models.Task;
-import com.newton.tr.member.Models.ViewModel;
 import com.newton.tr.member.R;
-import com.newton.tr.member.databinding.FragmentTabTaskBinding;
+import com.newton.tr.member.adapters.ItemRecyclerViewAdapter;
+import com.newton.tr.member.adapters.TaskRecyclerViewAdapter;
+import com.newton.tr.member.database.ItemRepo;
+import com.newton.tr.member.databinding.FragmentTabShopBinding;
+import com.newton.tr.member.models.Item;
+import com.newton.tr.member.models.ViewModel;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
-public class TabTask extends Fragment {
+public class TabShop extends Fragment {
 
     private RecyclerView recyclerView;
     private ViewModel viewModel = new ViewModel();
-    private TaskRepo taskRepo = new TaskRepo();
-    private TaskRecyclerViewAdapter adapter;
-    Date today = (Calendar.getInstance().getTime());
-    DateFormat timeFormat = new SimpleDateFormat("YYYY-MM-d, HH:mm z", Locale.getDefault());
+    private ItemRepo itemRepo = new ItemRepo();
+    private ItemRecyclerViewAdapter adapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,13 +43,21 @@ public class TabTask extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public TabTask() {
+    public TabShop() {
         // Required empty public constructor
     }
 
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment TabShop.
+     */
     // TODO: Rename and change types and number of parameters
-    public static TabTask newInstance(String param1, String param2) {
-        TabTask fragment = new TabTask();
+    public static TabShop newInstance(String param1, String param2) {
+        TabShop fragment = new TabShop();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -68,9 +67,7 @@ public class TabTask extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -78,46 +75,48 @@ public class TabTask extends Fragment {
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        FragmentTabTaskBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_task, container, false);
+        FragmentTabShopBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_shop, container, false);
         View view = binding.getRoot();
         binding.setViewModel(viewModel);
 
-        recyclerView = view.findViewById(R.id.recyclerView_Task);
-        Button newTaskButton = view.findViewById(R.id.btnAdd_Task);
-        final Button deleteTasksButton = view.findViewById(R.id.btnDelete_Tasks);
+        recyclerView = view.findViewById(R.id.recyclerView_Item);
+        Button newItemButton = view.findViewById(R.id.btnAdd_Item);
+        final Button deleteItemsButton = view.findViewById(R.id.btnDelete_Items);
 
-        deleteTasksButton.setOnClickListener(new View.OnClickListener() {
+        setUpRecyclerView();
+
+        deleteItemsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter.deleteCheckedTasks();
+                adapter.deleteCheckedItems();
             }
         });
 
-        newTaskButton.setOnClickListener(new View.OnClickListener() {
+        newItemButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
-                final View taskView = getLayoutInflater().inflate(R.layout.alertdialog_newtask, null);
+                final View itemView = getLayoutInflater().inflate(R.layout.alertdialog_newitem, null);
 
-                final EditText taskString = taskView.findViewById(R.id.taskEditText);
-                final Button cancelButton = taskView.findViewById(R.id.taskAlertDialogCancel);
-                final Button doneButton = taskView.findViewById(R.id.taskAlertDialogDone);
+                final EditText itemString = itemView.findViewById(R.id.itemEditText);
+                final Button cancelButton = itemView.findViewById(R.id.itemAlertDialogCancel);
+                final Button doneButton = itemView.findViewById(R.id.itemAlertDialogDone);
 
                 setUpRecyclerView();
 
-                dialogBuilder.setView(taskView);
-                final AlertDialog taskDialog = dialogBuilder.create();
-                taskDialog.show();
+                dialogBuilder.setView(itemView);
+                final AlertDialog itemDialog = dialogBuilder.create();
+                itemDialog.show();
 
                 cancelButton.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
-                        taskDialog.cancel();
+                        itemDialog.cancel();
                     }
                 });
 
@@ -125,16 +124,15 @@ public class TabTask extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        String taskDateAdded = timeFormat.format(today);
-                        String taskContent = taskString.getText().toString();
+                        String itemName = itemString.getText().toString();
 
-                        taskRepo.addTask(taskRepo.getAllTasks().size(),false, taskDateAdded, taskContent);
+                        itemRepo.addItem(itemRepo.getAllItems().size(),false, itemName);
 
-                        customToast("Task added successfully.");
+                        customToast("Item added successfully.");
 
                         adapter.refreshRecyclerView();
 
-                        taskDialog.dismiss();
+                        itemDialog.dismiss();
 
                     }
                 });
@@ -142,11 +140,7 @@ public class TabTask extends Fragment {
         });
 
         return view;
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -154,18 +148,6 @@ public class TabTask extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        setUpRecyclerView();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 
     @Override
@@ -185,13 +167,23 @@ public class TabTask extends Fragment {
         mListener = null;
     }
 
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
     private void setUpRecyclerView() {
-        adapter = new TaskRecyclerViewAdapter(taskRepo.getAllTasks(), TabTask.this);
+        adapter = new ItemRecyclerViewAdapter(itemRepo.getAllItems(), TabShop.this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
@@ -199,9 +191,9 @@ public class TabTask extends Fragment {
 
     public void setDeleteButtonVisibility(boolean showButton) {
         if (showButton) {
-            viewModel.setTaskDeleteMode(true);
+            viewModel.setShopDeleteMode(true);
         } else {
-            viewModel.setTaskDeleteMode(false);
+            viewModel.setShopDeleteMode(false);
         }
     }
 
@@ -221,29 +213,26 @@ public class TabTask extends Fragment {
 
     }
 
-    public void editTask(final Task task) {
+    public void editItem(final Item item) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
-        final View taskView = getLayoutInflater().inflate(R.layout.alertdialog_edittask, null);
+        final View itemView = getLayoutInflater().inflate(R.layout.alertdialog_edititem, null);
 
-        final EditText taskString = taskView.findViewById(R.id.taskEditText);
-        final TextView taskDate = taskView.findViewById(R.id.currentTaskDate);
-        final RadioButton newDate = taskView.findViewById(R.id.newDateRadioBtn);
-        final Button cancelButton = taskView.findViewById(R.id.taskAlertDialogCancel);
-        final Button doneButton = taskView.findViewById(R.id.taskAlertDialogDone);
+        final EditText itemEditText = itemView.findViewById(R.id.itemEditText);
+        final Button cancelButton = itemView.findViewById(R.id.taskAlertDialogCancel);
+        final Button doneButton = itemView.findViewById(R.id.taskAlertDialogDone);
 
-        taskString.setText(task.getTask());
-        taskDate.setText(task.getDateAdded());
+        itemEditText.setText(item.getName());
 
-        dialogBuilder.setView(taskView);
-        final AlertDialog taskDialog = dialogBuilder.create();
-        taskDialog.show();
+        dialogBuilder.setView(itemView);
+        final AlertDialog itemDialog = dialogBuilder.create();
+        itemDialog.show();
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                taskDialog.cancel();
+                itemDialog.cancel();
             }
         });
 
@@ -251,32 +240,24 @@ public class TabTask extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String taskDateAdded;
-                String taskContent = taskString.getText().toString();
-                int taskStatus = 0;
+                String itemName = itemEditText.getText().toString();
+                int itemStatus = 0;
 
-                if (task.getStatus()) {
-                    taskStatus = 1;
+                if (item.getStatus()) {
+                    itemStatus = 1;
                 }
 
-                if (newDate.isChecked()) {
+                itemRepo.updateItem(item.getId(), itemStatus, itemName, item.getName());
 
-                    taskDateAdded = timeFormat.format(today);
-
-                } else {
-                    taskDateAdded = task.getDateAdded();
-                }
-
-                taskRepo.updateTask(task.getId(), taskStatus, taskDateAdded, taskContent, task.getTask());
-
-                customToast("Task updated successfully!");
+                customToast("Item updated successfully!");
 
                 adapter.refreshRecyclerView();
 
-                taskDialog.dismiss();
+                itemDialog.dismiss();
 
             }
         });
 
     }
+
 }

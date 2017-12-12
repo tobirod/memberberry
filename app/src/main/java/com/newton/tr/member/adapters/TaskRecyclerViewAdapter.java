@@ -1,10 +1,8 @@
-package com.newton.tr.member.Adapters;
+package com.newton.tr.member.adapters;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +11,9 @@ import android.widget.CompoundButton;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.newton.tr.member.Database.TaskRepo;
-import com.newton.tr.member.Fragments.TabTask;
-import com.newton.tr.member.Models.Task;
+import com.newton.tr.member.database.TaskRepo;
+import com.newton.tr.member.fragments.TabTask;
+import com.newton.tr.member.models.Task;
 import com.newton.tr.member.R;
 
 import java.util.ArrayList;
@@ -44,19 +42,6 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
         }
     }
 
-    public void add(int position, Task task) {
-        taskList.add(position, task);
-        notifyItemInserted(position);
-    }
-
-    public void remove(int position, Task task) {
-        taskRepo.deleteTask(task.getId(), task.getTask());
-        int pos = taskList.indexOf(task);
-        taskList.remove(pos);
-        notifyItemRemoved(pos);
-    }
-
-    // Provide a suitable constructor (depends on the kind of dataset)
     public TaskRecyclerViewAdapter(ArrayList<Task> taskData, TabTask tabTask) {
         this.taskList = taskData;
         this.tabTask = tabTask;
@@ -66,7 +51,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     @Override
     public TaskRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View v = inflater.inflate(R.layout.row_layout, parent, false);
+        View v = inflater.inflate(R.layout.row_layout_task, parent, false);
 
         // set the view's size, margins, paddings and layout parameters
         return new ViewHolder(v);
@@ -157,9 +142,9 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     public void deleteCheckedTasks() {
 
         for(Iterator<Task> iterator = this.taskList.iterator(); iterator.hasNext(); ) {
-            Task test = iterator.next();
-            if(test.getIsChecked()) {
-                taskRepo.deleteTask(test.getId(), test.getTask());
+            Task task = iterator.next();
+            if(task.getIsChecked()) {
+                taskRepo.deleteTask(task.getId(), task.getTask());
                 iterator.remove();
             }
 

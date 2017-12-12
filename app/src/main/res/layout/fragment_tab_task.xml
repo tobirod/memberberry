@@ -6,13 +6,13 @@
 
     <data>
         <import type="android.view.View" />
-        <variable name="viewModel" type="com.newton.tr.member.Models.ViewModel" />
+        <variable name="viewModel" type="com.newton.tr.member.models.ViewModel" />
     </data>
 
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.newton.tr.member.Fragments.TabTask">
+    tools:context="com.newton.tr.member.fragments.TabTask">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView_Task"

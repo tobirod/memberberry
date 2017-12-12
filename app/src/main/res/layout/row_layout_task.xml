@@ -3,7 +3,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
 <data>
-    <variable name="ViewModel" type="com.newton.tr.member.Models.ViewModel" />
+    <variable name="ViewModel" type="com.newton.tr.member.models.ViewModel" />
 </data>
 
 <RelativeLayout

@@ -1,11 +1,11 @@
-package com.newton.tr.member.Database;
+package com.newton.tr.member.database;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.newton.tr.member.Models.Task;
+import com.newton.tr.member.models.Task;
 
 import java.util.ArrayList;
 
@@ -72,15 +72,6 @@ public class TaskRepo {
 
         DBManager.getInstance().closeDatabase();
         return listData;
-    }
-
-    public Cursor getTaskId(String UUID) {
-        SQLiteDatabase db = DBManager.getInstance().openDatabase();
-        String query = "SELECT " + COL0 + " FROM " + TASKTABLE_NAME + " WHERE " + COL1 + " = '" + UUID + "'";
-        Cursor data = db.rawQuery(query, null);
-        DBManager.getInstance().closeDatabase();
-
-        return data;
     }
 
     public void deleteTask(int ID, String task) {

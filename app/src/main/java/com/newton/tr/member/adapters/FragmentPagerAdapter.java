@@ -1,12 +1,12 @@
-package com.newton.tr.member.Adapters;
+package com.newton.tr.member.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.newton.tr.member.Fragments.TabNote;
-import com.newton.tr.member.Fragments.TabShop;
-import com.newton.tr.member.Fragments.TabTask;
+import com.newton.tr.member.fragments.TabNote;
+import com.newton.tr.member.fragments.TabShop;
+import com.newton.tr.member.fragments.TabTask;
 
 public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
 

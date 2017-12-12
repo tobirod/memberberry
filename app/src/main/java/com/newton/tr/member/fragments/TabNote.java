@@ -1,4 +1,4 @@
-package com.newton.tr.member.Fragments;
+package com.newton.tr.member.fragments;
 
 import android.content.Context;
 import android.net.Uri;

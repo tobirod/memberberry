@@ -1,4 +1,4 @@
-package com.newton.tr.member.Adapters;
+package com.newton.tr.member.adapters;
 
 public class NoteRecyclerViewAdapter {
 }

@@ -1,11 +1,12 @@
-package com.newton.tr.member.Database;
+package com.newton.tr.member.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.newton.tr.member.App.App;
+import com.newton.tr.member.app.App;
+import com.newton.tr.member.models.Item;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -24,6 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(TaskRepo.createTaskTable());
+        db.execSQL(ItemRepo.createItemTable());
     }
 
     @Override
@@ -32,6 +34,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         // Drop table if existed, all data will be gone!!!
         db.execSQL("DROP TABLE IF EXISTS " + TaskRepo.TASKTABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ItemRepo.ITEMTABLE_NAME);
         onCreate(db);
     }
 }

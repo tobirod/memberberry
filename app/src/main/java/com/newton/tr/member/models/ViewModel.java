@@ -1,11 +1,7 @@
-package com.newton.tr.member.Models;
+package com.newton.tr.member.models;
 
-import android.app.Activity;
-import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.newton.tr.member.BR;
 

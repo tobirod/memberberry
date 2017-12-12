@@ -1,4 +1,4 @@
-package com.newton.tr.member.Database;
+package com.newton.tr.member.database;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
