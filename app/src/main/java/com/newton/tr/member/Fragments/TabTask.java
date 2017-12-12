@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -231,8 +232,8 @@ public class TabTask extends Fragment {
         final Button cancelButton = taskView.findViewById(R.id.taskAlertDialogCancel);
         final Button doneButton = taskView.findViewById(R.id.taskAlertDialogDone);
 
-        taskString.setText(task.getTaskContent());
-        taskDate.setText(task.getTaskDateAdded());
+        taskString.setText(task.getTask());
+        taskDate.setText(task.getDateAdded());
 
         dialogBuilder.setView(taskView);
         final AlertDialog taskDialog = dialogBuilder.create();
@@ -254,7 +255,7 @@ public class TabTask extends Fragment {
                 String taskContent = taskString.getText().toString();
                 int taskStatus = 0;
 
-                if (task.getTaskStatus()) {
+                if (task.getStatus()) {
                     taskStatus = 1;
                 }
 
@@ -263,10 +264,10 @@ public class TabTask extends Fragment {
                     taskDateAdded = timeFormat.format(today);
 
                 } else {
-                    taskDateAdded = task.getTaskDateAdded();
+                    taskDateAdded = task.getDateAdded();
                 }
 
-                taskRepo.updateTask(task.getTaskId(), taskStatus, taskDateAdded, taskContent, task.getTaskContent());
+                taskRepo.updateTask(task.getId(), taskStatus, taskDateAdded, taskContent, task.getTask());
 
                 customToast("Task updated successfully!");
 

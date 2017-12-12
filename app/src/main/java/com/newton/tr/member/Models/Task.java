@@ -2,35 +2,35 @@ package com.newton.tr.member.Models;
 
 public class Task {
 
-    public Task(int taskID, boolean taskStatus, boolean taskChecked, String taskDateAdded, String taskContent) {
-        this.taskId = taskID;
-        this.taskStatus = taskStatus;
-        this.taskChecked = taskChecked;
-        this.taskDateAdded = taskDateAdded;
-        this.taskContent = taskContent;
+    public Task(int taskID, boolean taskStatus, boolean isChecked, String dateAdded, String task) {
+        this.ID = taskID;
+        this.status = taskStatus;
+        this.isChecked = isChecked;
+        this.dateAdded = dateAdded;
+        this.task = task;
     }
 
-    private int taskId;
-    private boolean taskStatus;
-    private boolean taskChecked;
-    private String taskDateAdded;
-    private String taskContent;
+    private int ID;
+    private boolean status;
+    private boolean isChecked;
+    private String dateAdded;
+    private String task;
 
-    public int getTaskId() { return taskId; }
-    public void setId(int taskId) { this.taskId = taskId; }
+    public int getId() { return ID; }
+    public void setId(int ID) { this.ID = ID; }
 
-    public boolean getTaskStatus() { return taskStatus; }
-    public void setTaskStatus(boolean taskStatus) { this.taskStatus = taskStatus; }
+    public boolean getStatus() { return status; }
+    public void setStatus(boolean status) { this.status = status; }
 
-    public boolean getIsChecked() { return taskChecked; }
-    public void setIsChecked(boolean taskChecked) {
-        this.taskChecked = taskChecked;
+    public boolean getIsChecked() { return isChecked; }
+    public void setIsChecked(boolean isChecked) {
+        this.isChecked = isChecked;
     }
 
-    public String getTaskDateAdded() { return taskDateAdded; }
-    public void setTaskDateAdded(String taskDateAdded) { this.taskDateAdded = taskDateAdded; }
+    public String getDateAdded() { return dateAdded; }
+    public void setDateAdded(String dateAdded) { this.dateAdded = dateAdded; }
 
-    public String getTaskContent() { return taskContent; }
-    public void setTaskContent(String taskContent) { this.taskContent = taskContent; }
+    public String getTask() { return task; }
+    public void setTask(String task) { this.task = task; }
 
 }

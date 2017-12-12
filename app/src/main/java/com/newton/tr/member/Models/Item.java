@@ -2,20 +2,6 @@ package com.newton.tr.member.Models;
 
 public class Item {
 
-    public Item(int taskID, boolean taskStatus, boolean isChecked, String dateAdded, String task) {
-        this.ID = taskID;
-        this.status = taskStatus;
-        this.isChecked = isChecked;
-        this.dateAdded = dateAdded;
-        this.task = task;
-    }
-
-    private int ID;
-    private boolean status;
-    private boolean isChecked;
-    private String dateAdded;
-    private String task;
-
 }
 
 
