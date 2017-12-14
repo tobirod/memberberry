@@ -26,6 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(TaskRepo.createTaskTable());
         db.execSQL(ItemRepo.createItemTable());
+        db.execSQL(NoteRepo.createNoteTable());
     }
 
     @Override
@@ -35,6 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // Drop table if existed, all data will be gone!!!
         db.execSQL("DROP TABLE IF EXISTS " + TaskRepo.TASKTABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + ItemRepo.ITEMTABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + NoteRepo.NOTETABLE_NAME);
         onCreate(db);
     }
 }

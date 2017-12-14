@@ -106,8 +106,6 @@ public class TabShop extends Fragment {
                 final Button cancelButton = itemView.findViewById(R.id.itemAlertDialogCancel);
                 final Button doneButton = itemView.findViewById(R.id.itemAlertDialogDone);
 
-                setUpRecyclerView();
-
                 dialogBuilder.setView(itemView);
                 final AlertDialog itemDialog = dialogBuilder.create();
                 itemDialog.show();
@@ -128,7 +126,7 @@ public class TabShop extends Fragment {
 
                         itemRepo.addItem(itemRepo.getAllItems().size(),false, itemName);
 
-                        customToast("Item added successfully.");
+                        customToast("New item added successfully.");
 
                         adapter.refreshRecyclerView();
 

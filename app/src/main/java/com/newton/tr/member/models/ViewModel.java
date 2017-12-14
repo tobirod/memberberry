@@ -14,22 +14,16 @@ public class ViewModel extends BaseObservable {
     @Bindable
     public boolean getTaskDeleteMode() { return taskDeleteMode; }
     @Bindable
-    public void setTaskDeleteMode(boolean taskDeleteMode) { this.taskDeleteMode = taskDeleteMode; notifyPropertyChanged(BR.taskDeleteMode);}
+    public void setTaskDeleteMode(boolean taskDeleteMode) { this.taskDeleteMode = taskDeleteMode; notifyPropertyChanged(BR.taskDeleteMode); }
 
     @Bindable
     public boolean getShopDeleteMode() { return shopDeleteMode; }
     @Bindable
-    public void setShopDeleteMode(boolean shopDeleteMode) { this.shopDeleteMode = shopDeleteMode; notifyPropertyChanged(BR.shopDeleteMode);}
+    public void setShopDeleteMode(boolean shopDeleteMode) { this.shopDeleteMode = shopDeleteMode; notifyPropertyChanged(BR.shopDeleteMode); }
 
     @Bindable
     public boolean getNoteDeleteMode() { return noteDeleteMode; }
     @Bindable
-    public void setNoteDeleteMode(boolean noteDeleteMode) { this.noteDeleteMode = noteDeleteMode; notifyPropertyChanged(BR.noteDeleteMode);}
-
-
-
-
-
-
+    public void setNoteDeleteMode(boolean noteDeleteMode) { this.noteDeleteMode = noteDeleteMode; notifyPropertyChanged(BR.noteDeleteMode); }
 
 }

@@ -6,7 +6,7 @@ import android.content.Context;
 import com.newton.tr.member.database.DBHelper;
 import com.newton.tr.member.database.DBManager;
 
-public class  App extends Application {
+public class App extends Application {
     private static Context context;
     private static DBHelper dbHelper;
 

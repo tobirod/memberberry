@@ -129,7 +129,7 @@ public class TabTask extends Fragment {
 
                         taskRepo.addTask(taskRepo.getAllTasks().size(),false, taskDateAdded, taskContent);
 
-                        customToast("Task added successfully.");
+                        customToast("New task added successfully.");
 
                         adapter.refreshRecyclerView();
 
