@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -110,6 +111,7 @@ public class TabTask extends Fragment {
 
                 dialogBuilder.setView(taskView);
                 final AlertDialog taskDialog = dialogBuilder.create();
+                taskDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                 taskDialog.show();
 
                 cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -236,6 +238,8 @@ public class TabTask extends Fragment {
 
         dialogBuilder.setView(taskView);
         final AlertDialog taskDialog = dialogBuilder.create();
+        taskDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        taskString.setSelection(taskString.getText().toString().length());
         taskDialog.show();
 
         cancelButton.setOnClickListener(new View.OnClickListener() {

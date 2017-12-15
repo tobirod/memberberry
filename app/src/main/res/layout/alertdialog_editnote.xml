@@ -1,6 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pastelCream">
+
+    <TextView
+        android:id="@+id/noteEdit_TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@color/plum"
+        android:fontFamily="@font/snaphand"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/header_note_edit"
+        android:textColor="@color/pastelCream"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/noteEditTitle_EditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/noteEditTitle_EditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:fontFamily="@font/komika_text"
+        android:hint="@string/hint_title_note_edit"
+        android:inputType="textCapSentences|textMultiLine"
+        android:textColor="@color/plum"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/noteEdit_TextView" />
+
+    <EditText
+        android:id="@+id/noteEditBody_EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="6dp"
+        android:ems="10"
+        android:fontFamily="@font/komika_text"
+        android:hint="@string/hint_body_note_edit"
+        android:inputType="textCapSentences|textMultiLine"
+        android:textColor="@color/plum"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/noteEditTitle_EditText" />
+
+    <Button
+        android:id="@+id/noteEditAlertDialogCancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@layout/custom_button"
+        android:fontFamily="@font/snaphand"
+        android:text="@string/alertdialogbutton_cancel"
+        android:textColor="@color/pastelCream"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/noteEditAlertDialogDone"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/noteEditBody_EditText" />
+
+    <Button
+        android:id="@+id/noteEditAlertDialogDone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@layout/custom_button"
+        android:fontFamily="@font/snaphand"
+        android:text="@string/alertdialogbutton_done"
+        android:textColor="@color/pastelCream"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/noteEditAlertDialogCancel"
+        app:layout_constraintTop_toBottomOf="@+id/noteEditBody_EditText" />
 
 </android.support.constraint.ConstraintLayout>

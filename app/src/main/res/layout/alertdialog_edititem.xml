@@ -6,7 +6,7 @@
     android:background="@color/pastelCream">
 
     <TextView
-        android:id="@+id/itemTitle"
+        android:id="@+id/itemEditHeader_TextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -14,16 +14,16 @@
         android:fontFamily="@font/snaphand"
         android:gravity="center"
         android:padding="10dp"
-        android:text="EDIT ITEM"
+        android:text="@string/header_item_edit"
         android:textColor="@color/pastelCream"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/itemEditText"
+        app:layout_constraintBottom_toTopOf="@+id/itemEditName_EditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/itemEditText"
+        android:id="@+id/itemEditName_EditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -31,44 +31,44 @@
         android:layout_marginTop="32dp"
         android:ems="10"
         android:fontFamily="@font/komika_text"
-        android:hint="What do you need to buy?"
-        android:inputType="text"
+        android:hint="@string/hint_name_item_edit"
+        android:inputType="textCapSentences|textMultiLine"
         android:textColor="@color/plum"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itemTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/itemEditHeader_TextView" />
 
     <Button
-        android:id="@+id/taskAlertDialogCancel"
+        android:id="@+id/itemEditAlertDialogCancel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@layout/custom_button"
         android:fontFamily="@font/snaphand"
-        android:text="Cancel"
+        android:text="@string/alertdialogbutton_cancel"
         android:textColor="@color/pastelCream"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/taskAlertDialogDone"
+        app:layout_constraintEnd_toStartOf="@+id/itemEditAlertDialogDone"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itemEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/itemEditName_EditText" />
 
     <Button
-        android:id="@+id/taskAlertDialogDone"
+        android:id="@+id/itemEditAlertDialogDone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@layout/custom_button"
         android:fontFamily="@font/snaphand"
-        android:text="Done"
+        android:text="@string/alertdialogbutton_done"
         android:textColor="@color/pastelCream"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@+id/taskAlertDialogCancel"
-        app:layout_constraintTop_toBottomOf="@+id/itemEditText" />
+        app:layout_constraintStart_toEndOf="@+id/itemEditAlertDialogCancel"
+        app:layout_constraintTop_toBottomOf="@+id/itemEditName_EditText" />
 
 </android.support.constraint.ConstraintLayout>

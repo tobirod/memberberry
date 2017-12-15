@@ -2,6 +2,7 @@ package com.newton.tr.member.activities;
 
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -10,7 +11,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.newton.tr.member.adapters.FragmentPagerAdapter;
 import com.newton.tr.member.fragments.TabNote;
@@ -27,7 +33,10 @@ public class MainActivity extends AppCompatActivity implements TabTask.OnFragmen
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
 
@@ -40,9 +49,9 @@ public class MainActivity extends AppCompatActivity implements TabTask.OnFragmen
         final FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
 
         viewPager.setAdapter(fragmentPagerAdapter);
-        viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
@@ -82,13 +91,15 @@ public class MainActivity extends AppCompatActivity implements TabTask.OnFragmen
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_userGuide) {
+            userGuide();
             return true;
         }
 
@@ -97,6 +108,27 @@ public class MainActivity extends AppCompatActivity implements TabTask.OnFragmen
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    public void userGuide() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        final View userGuideView = getLayoutInflater().inflate(R.layout.alertdialog_userguide, null);
+        final Button doneButton = userGuideView.findViewById(R.id.userGuideAlertDialogDone);
+
+        dialogBuilder.setView(userGuideView);
+        final AlertDialog userGuideDialog = dialogBuilder.create();
+        userGuideDialog.show();
+
+        doneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                userGuideDialog.dismiss();
+
+            }
+        });
 
     }
 }

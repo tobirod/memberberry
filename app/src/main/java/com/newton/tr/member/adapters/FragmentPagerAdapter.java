@@ -21,14 +21,11 @@ public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                TabTask tabTask = new TabTask();
-                return tabTask;
+                return new TabTask();
             case 1:
-                TabShop tabShop = new TabShop();
-                return tabShop;
+                return new TabShop();
             case 2:
-                TabNote tabNote = new TabNote();
-                return tabNote;
+                return new TabNote();
             default:
                 return null;
         }

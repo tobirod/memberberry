@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -26,7 +27,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TableLayout taskTable;
+        public LinearLayout taskTextViews;
         public TextView taskDesc;
         public TextView taskDate;
         public CheckBox checkBox;
@@ -35,7 +36,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
         public ViewHolder(View v) {
             super(v);
             layout = v;
-            taskTable = v.findViewById(R.id.taskTable);
+            taskTextViews = v.findViewById(R.id.taskTextViews);
             taskDesc = v.findViewById(R.id.taskDesc);
             taskDate = v.findViewById(R.id.taskDate);
             checkBox = v.findViewById(R.id.checkBox);
@@ -102,7 +103,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
             }
         });
 
-        holder.taskTable.setOnClickListener(new View.OnClickListener() {
+        holder.taskTextViews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -122,7 +123,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
             }
         });
 
-        holder.taskTable.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.taskTextViews.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 tabTask.editTask(mTask);

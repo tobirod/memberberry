@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -108,6 +109,8 @@ public class TabShop extends Fragment {
 
                 dialogBuilder.setView(itemView);
                 final AlertDialog itemDialog = dialogBuilder.create();
+                itemDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                itemString.setSelection(itemString.getText().toString().length());
                 itemDialog.show();
 
                 cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -224,6 +227,8 @@ public class TabShop extends Fragment {
 
         dialogBuilder.setView(itemView);
         final AlertDialog itemDialog = dialogBuilder.create();
+        itemDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        itemEditText.setSelection(itemEditText.getText().toString().length());
         itemDialog.show();
 
         cancelButton.setOnClickListener(new View.OnClickListener() {

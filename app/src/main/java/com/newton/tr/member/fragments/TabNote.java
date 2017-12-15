@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -109,6 +110,7 @@ public class TabNote extends Fragment {
 
                 dialogBuilder.setView(noteView);
                 final AlertDialog noteDialog = dialogBuilder.create();
+                noteDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                 noteDialog.show();
 
                 cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -211,30 +213,32 @@ public class TabNote extends Fragment {
         toast.show();
 
     }
-/*
-    public void editTask(final Note note) {
+
+    public void editNote(final Note note) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
-        final View taskView = getLayoutInflater().inflate(R.layout.alertdialog_edittask, null);
+        final View noteView = getLayoutInflater().inflate(R.layout.alertdialog_editnote, null);
 
-        final EditText taskString = taskView.findViewById(R.id.taskEditText);
-        final TextView taskDate = taskView.findViewById(R.id.currentTaskDate);
-        final RadioButton newDate = taskView.findViewById(R.id.newDateRadioBtn);
-        final Button cancelButton = taskView.findViewById(R.id.taskAlertDialogCancel);
-        final Button doneButton = taskView.findViewById(R.id.taskAlertDialogDone);
+        final EditText noteEditTitleEditText = noteView.findViewById(R.id.noteEditTitleEditText);
+        final EditText noteEditBodyEditText = noteView.findViewById(R.id.noteEditBodyEditText);
+        final Button cancelButton = noteView.findViewById(R.id.noteAlertDialogCancel);
+        final Button doneButton = noteView.findViewById(R.id.noteAlertDialogDone);
 
-        taskString.setText(task.getTask());
-        taskDate.setText(task.getDateAdded());
+        noteEditTitleEditText.setText(note.getTitle());
+        noteEditBodyEditText.setText(note.getBody());
 
-        dialogBuilder.setView(taskView);
-        final AlertDialog taskDialog = dialogBuilder.create();
-        taskDialog.show();
+        dialogBuilder.setView(noteView);
+        final AlertDialog noteDialog = dialogBuilder.create();
+        noteDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        noteEditTitleEditText.setSelection(noteEditTitleEditText.getText().toString().length());
+
+        noteDialog.show();
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                taskDialog.cancel();
+                noteDialog.cancel();
             }
         });
 
@@ -242,33 +246,19 @@ public class TabNote extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String taskDateAdded;
-                String taskContent = taskString.getText().toString();
-                int taskStatus = 0;
+                String noteEditTitle = noteEditTitleEditText.getText().toString();
+                String noteEditBody = noteEditBodyEditText.getText().toString();
 
-                if (task.getStatus()) {
-                    taskStatus = 1;
-                }
+                noteRepo.updateNote(note.getId(), noteEditTitle, noteEditBody,note.getTitle());
 
-                if (newDate.isChecked()) {
-
-                    taskDateAdded = timeFormat.format(today);
-
-                } else {
-                    taskDateAdded = task.getDateAdded();
-                }
-
-                taskRepo.updateTask(task.getId(), taskStatus, taskDateAdded, taskContent, task.getTask());
-
-                customToast("Task updated successfully!");
+                customToast("Note updated successfully!");
 
                 adapter.refreshRecyclerView();
 
-                taskDialog.dismiss();
+                noteDialog.dismiss();
 
             }
         });
 
     }
-    */
 }

@@ -7,21 +7,15 @@ import com.newton.tr.member.database.DBHelper;
 import com.newton.tr.member.database.DBManager;
 
 public class App extends Application {
-    private static Context context;
-    private static DBHelper dbHelper;
+    private Context context = App.this;
 
     @Override
     public void onCreate()
     {
         super.onCreate();
-        context = this.getApplicationContext();
-        dbHelper = new DBHelper();
+        DBHelper dbHelper = new DBHelper(context);
         DBManager.initializeInstance(dbHelper);
 
-    }
-
-    public static Context getContext(){
-        return context;
     }
 
 }

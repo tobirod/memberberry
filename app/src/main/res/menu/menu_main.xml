@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.newton.tr.member.activities.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_userGuide"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/action_userGuide"
         app:showAsAction="never" />
 </menu>

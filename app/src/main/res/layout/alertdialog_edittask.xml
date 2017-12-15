@@ -6,7 +6,7 @@
     android:background="@color/pastelCream">
 
     <TextView
-        android:id="@+id/taskAlertDialogHeader"
+        android:id="@+id/taskEditAlertDialogHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -14,7 +14,7 @@
         android:fontFamily="@font/snaphand"
         android:gravity="center"
         android:padding="10dp"
-        android:text="EDIT TASK"
+        android:text="@string/edit_taskheader"
         android:textColor="@color/pastelCream"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/taskEditText"
@@ -31,8 +31,8 @@
         android:layout_marginTop="32dp"
         android:ems="10"
         android:fontFamily="@font/komika_text"
-        android:hint="What is your task?"
-        android:inputType="text"
+        android:hint="@string/hinttaskEdit"
+        android:inputType="textCapSentences|textMultiLine"
         android:textColor="@color/plum"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +46,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="15dp"
         android:fontFamily="@font/komika_header"
-        android:text="Added:"
+        android:text="@string/dateaddededittask"
         android:textColor="@color/plum"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +83,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Replace with a new date from today?" />
+            android:text="@string/replace_with_a_new_date_from_today" />
 
     </RadioGroup>
 
@@ -94,7 +94,7 @@
         android:layout_marginTop="20dp"
         android:background="@layout/custom_button"
         android:fontFamily="@font/snaphand"
-        android:text="Cancel"
+        android:text="@string/alertdialogbutton_cancel"
         android:textColor="@color/pastelCream"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/taskAlertDialogDone"
@@ -110,7 +110,7 @@
         android:layout_marginTop="20dp"
         android:background="@layout/custom_button"
         android:fontFamily="@font/snaphand"
-        android:text="Done"
+        android:text="@string/alertdialogbutton_done"
         android:textColor="@color/pastelCream"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"

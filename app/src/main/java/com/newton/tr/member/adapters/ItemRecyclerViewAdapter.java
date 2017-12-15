@@ -22,7 +22,6 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
     private ArrayList<Item> itemList;
     private TabShop tabShop;
     private ItemRepo itemRepo;
-    public int itemTextColor = R.color.charcoal;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView itemName;
@@ -48,13 +47,13 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View v = inflater.inflate(R.layout.row_layout_item, parent, false);
 
-        // set the view's size, margins, paddings and layout parameters
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(final ItemRecyclerViewAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ItemRecyclerViewAdapter.ViewHolder holder, int position) {
         final Item mItem = itemList.get(holder.getAdapterPosition());
+        final int pos = holder.getAdapterPosition();
         holder.itemName.setText(mItem.getName());
 
         if (mItem.getStatus()) {
@@ -63,6 +62,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
 
         } else if (!mItem.getStatus()) {
             holder.itemName.setPaintFlags(0);
+            int itemTextColor = R.color.charcoal;
             holder.itemName.setTextColor(holder.itemName.getResources().getColor(itemTextColor));
 
         }
@@ -73,7 +73,6 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
 
                 if (isChecked) {
                     mItem.setIsChecked(true);
@@ -91,16 +90,15 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
             @Override
             public void onClick(View v) {
 
-
                 int itemID = mItem.getId();
                 boolean itemStatus = mItem.getStatus();
                 String itemName = mItem.getName();
 
                 if (itemStatus) {
-                    updateItemStatus(itemID, 0, itemName, position);
+                    updateItemStatus(itemID, 0, itemName, pos);
 
                 } else {
-                    updateItemStatus(itemID, 1, itemName, position);
+                    updateItemStatus(itemID, 1, itemName, pos);
 
                 }
             }
@@ -109,6 +107,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         holder.itemName.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+
                 tabShop.editItem(mItem);
 
                 return true;
@@ -125,36 +124,36 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
 
         for(Iterator<Item> iterator = this.itemList.iterator(); iterator.hasNext(); ) {
             Item item = iterator.next();
+
             if(item.getIsChecked()) {
                 itemRepo.deleteItem(item.getId(), item.getName());
                 iterator.remove();
-            }
 
+            }
         }
 
         tabShop.setDeleteButtonVisibility(hasTasksToDelete());
-
         notifyDataSetChanged();
     }
 
     private void updateItemStatus(int ID, int status, String name, int pos) {
+
         itemRepo.updateItem(ID, status, name, name);
         Item mItem = itemList.get(pos);
-
         boolean newStatus = true;
 
         if (status == 0) {
             newStatus = false;
+
         }
 
         mItem.setStatus(newStatus);
-
         notifyDataSetChanged();
     }
 
     public void refreshRecyclerView() {
-        itemList = itemRepo.getAllItems();
 
+        itemList = itemRepo.getAllItems();
         notifyDataSetChanged();
     }
 

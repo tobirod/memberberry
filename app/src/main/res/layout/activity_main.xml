@@ -22,14 +22,15 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher_member" />
+            android:src="@mipmap/ic_launcher_member"
+            android:contentDescription="@string/member_logo" />
 
         <TextView
             android:id="@+id/toolBarText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/snaphand"
-            android:text="... member?"
+            android:text="@string/toolbar_title"
             android:textColor="@color/pastelCream"
             android:textSize="30sp" />
 
